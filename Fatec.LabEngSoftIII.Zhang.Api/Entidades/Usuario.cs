@@ -1,6 +1,4 @@
-﻿using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Entradas;
-
-namespace Fatec.LabEngSoftIII.Zhang.Api.Entidades
+﻿namespace Fatec.LabEngSoftIII.Zhang.Api.Entidades
 {
     public class Usuario
     {
