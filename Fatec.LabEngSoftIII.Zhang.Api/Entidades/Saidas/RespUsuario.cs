@@ -10,7 +10,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas
         public int Experiencia { get; set; }
         public int ExperienciaProximoNivel { get; set; }
         public int Nivel { get; set; }
-        public List<Skin> Skins { get; set; }
+        public List<RespSkin> Skins { get; set; }
         public string Token { get; set; }
 
     }

@@ -40,25 +40,28 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
                 Experiencia = 400,
                 ExperienciaProximoNivel = 50,
                 Nivel = 4,
-                Skins = new List<Skin>()
+                Skins = new List<RespSkin>()
                 {
-                    new Skin()
+                    new RespSkin()
                     {
                         Id = 1,
                         Nivel = 1,
-                        Descricao = "Skin 1"
+                        Descricao = "Skin 1",
+                        Ativo = false
                     } ,
-                    new Skin()
+                    new RespSkin()
                     {
                         Id = 2,
                         Nivel = 2,
-                        Descricao = "Skin 2"
+                        Descricao = "Skin 2",
+                        Ativo = true
                     } ,
-                    new Skin()
+                    new RespSkin()
                     {
                         Id = 3,
                         Nivel = 3,
-                        Descricao = "Skin 3"
+                        Descricao = "Skin 3",
+                        Ativo = false
                     }
                 },
                 Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
