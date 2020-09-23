@@ -79,5 +79,13 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             };
             return Ok(resp);
         }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [Route("Skins")]
+        public ActionResult AlteracaoSkins([FromBody] List<ReqSkin> skins)
+        {
+            return Ok("Skins atualizadas com sucesso");
+        }
     }
 }

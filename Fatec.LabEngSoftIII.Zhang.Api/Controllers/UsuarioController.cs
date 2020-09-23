@@ -12,7 +12,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
     public class UsuarioController : ControllerBase
     {
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [Route("Cadastro")]
         public ActionResult Cadastro([FromBody] Usuario usuario)
         {
@@ -20,7 +20,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [Route("RecuperacaoSenha")]
         public ActionResult RecuperacaoSenha([FromBody] string LoginEmail)
         {
@@ -73,7 +73,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
 
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [Route("AlterarDados")]
         public ActionResult AlterarDados([FromBody] Usuario usuario)
         {
