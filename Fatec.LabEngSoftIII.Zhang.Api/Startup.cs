@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 
 namespace Fatec.LabEngSoftIII.Zhang.Api
 {
@@ -23,14 +24,22 @@ namespace Fatec.LabEngSoftIII.Zhang.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo
+                    {
+                        Title = "Zhang - Jogo da Forca",
+                        Version = "v1",
+                        Description = "API Desenvolvida para o Jogo da Forca Zhang.<br>Trabalho para a matéria de Engenharia de Software III do curso de ADS (noite) da FATEC-SP<br><br>Integrantes:<br>Allan Prado de Oliveira Moura<br>Augusto Albuquerque Reis<br>Bruna Ramos<br>Danillo Felipe Aragão<br>Danilo Tupinambá Polizeli<br>Gabriel Alves da Silva<br>Gustavo Rocha da Silva<br>Shayanne Crispim de Medeiros Amorim<br>Tatiana Rodrigues de Oliveira",
+                    });
+            });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -49,7 +58,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API jogo da forca Zhang");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Jogo da Forca Zhang");
                 c.RoutePrefix = string.Empty;
             });
         }
