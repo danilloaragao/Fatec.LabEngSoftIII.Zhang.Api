@@ -52,6 +52,12 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             {
                 entity.ToTable("USUARIO_SKIN");
 
+                entity.HasKey(e => e.Id)
+                    .HasName("ID");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID");
+
                 entity.Property(e => e.IdUsuario)
                     .HasColumnName("ID_USUARIO");
 
@@ -82,6 +88,12 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             modelBuilder.Entity<Experiencia>(entity =>
             {
                 entity.ToTable("EXPERIENCIA");
+
+                entity.HasKey(e => e.Id)
+                     .HasName("ID");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.Valor)
                     .HasColumnName("VALOR");
