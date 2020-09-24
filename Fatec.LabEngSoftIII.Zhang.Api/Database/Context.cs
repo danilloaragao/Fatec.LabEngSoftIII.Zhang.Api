@@ -83,6 +83,8 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             {
                 entity.ToTable("EXPERIENCIA");
 
+                entity.HasKey("NIVEL");
+
                 entity.Property(e => e.Valor)
                     .HasColumnName("VALOR");
 

@@ -14,7 +14,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(RespPalavraJogo))]
         [Route("Palavra")]
-        public ActionResult PegarPalvra([FromRoute] string tema)
+        public ActionResult PegarPalavra([FromRoute] string tema)
         {
 
             return Ok(new RespPalavraJogo()
