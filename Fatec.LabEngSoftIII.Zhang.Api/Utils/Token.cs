@@ -41,7 +41,8 @@ namespace Fatec.LabEngSoftIII.Zhang.API.Utils
 
         public bool Validar(string token)
         {
-            var tokenLido = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string tokenLimpo = token.Replace("Bearer", "").Replace("Authentication", "").Trim();
+            var tokenLido = new JwtSecurityTokenHandler().ReadJwtToken(tokenLimpo);
 
             Usuario usuario = new Usuario();
             string login = tokenLido.Claims.Where(e => e.Type.Equals("unique_name")).FirstOrDefault().Value;
@@ -49,7 +50,18 @@ namespace Fatec.LabEngSoftIII.Zhang.API.Utils
 
             string novoToken = Gerar(login, id);
 
-            return token.Equals(novoToken);
+            return tokenLimpo.Equals(novoToken);
+        }
+
+        public bool ValidarAdm(string token)
+        {
+            if (!Validar(token))
+                return false;
+
+            var tokenLido = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            int id = int.Parse(tokenLido.Claims.Where(e => e.Type.Equals("nameid")).FirstOrDefault().Value);
+
+            return id == 1;
         }
     }
 }

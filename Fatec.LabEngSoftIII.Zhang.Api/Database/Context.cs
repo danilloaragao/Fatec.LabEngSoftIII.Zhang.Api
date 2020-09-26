@@ -6,12 +6,12 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 {
     public class Context : DbContext
     {
-        private string _connectionString { get; set; }
+        private string ConnectionString { get; set; }
 
         public Context()
         {
             Config config = new Config();
-            this._connectionString = config.ConnetionString;
+            this.ConnectionString = config.ConnetionString;
         }
 
         public DbSet<Usuario> Usuarios { get; set; }
@@ -21,7 +21,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
         public DbSet<PalavraJogo> Palavras { get; set; }
         public DbSet<Tema> Temas { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseNpgsql(this._connectionString);
+        protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseNpgsql(this.ConnectionString);
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
