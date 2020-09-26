@@ -10,7 +10,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 
         public List<Skin> PegarSkinsPorDescricao(string descricaoSkin)
         {
-            return this.Context.Skins.Where(s => s.Descricao.Contains(descricaoSkin)).ToList();
+            return this.Context.Skins.Where(s => s.Descricao.ToUpper().Contains(descricaoSkin.ToUpper())).ToList();
         }
 
         public List<Skin> PegarSkinsPorNivel(int? nivel)

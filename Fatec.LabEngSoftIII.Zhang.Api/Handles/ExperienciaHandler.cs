@@ -1,6 +1,5 @@
 ﻿using Fatec.LabEngSoftIII.Zhang.Api.Database;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 

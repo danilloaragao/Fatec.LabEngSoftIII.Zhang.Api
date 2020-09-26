@@ -1,10 +1,7 @@
 ﻿using Fatec.LabEngSoftIII.Zhang.Api.Database;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 {

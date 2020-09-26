@@ -1,9 +1,7 @@
 ﻿using Fatec.LabEngSoftIII.Zhang.Api.Database;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 {
@@ -67,6 +65,9 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 
             if (skins.Any(t => t.Descricao.ToUpper().Equals(skin.Descricao.ToUpper())))
                 return "Skin já existe no banco de dados";
+
+            if (PegarSkin(skin.Id) == null)
+                return "Id não encontrado no banco de dados";
 
             return this.SkinBD.AlteraSkin(skin);
         }
