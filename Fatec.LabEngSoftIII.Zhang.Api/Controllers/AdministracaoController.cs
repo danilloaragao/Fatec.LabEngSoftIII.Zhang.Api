@@ -30,7 +30,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 List<PalavraJogo> palavras = this.PalavraHandler.PegarPalavrasPorTema(tema);
 
@@ -58,7 +58,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 PalavraJogo palavra = this.PalavraHandler.PegarPalavra(id);
 
@@ -83,7 +83,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 List<PalavraJogo> palavras = this.PalavraHandler.PegarPalavrasPorTrecho(palavra);
 
@@ -108,7 +108,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 List<PalavraJogo> palavras = this.PalavraHandler.PegarTodasPalavras();
 
@@ -133,7 +133,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 string resultado = this.PalavraHandler.InserePalavra(palavra);
                 return Ok(resultado);
@@ -154,7 +154,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 string resultado = this.PalavraHandler.AlteraPalavra(palavra);
                 return Ok(resultado);
@@ -175,7 +175,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 string resultado = this.PalavraHandler.DeletaPalavra(idPalavra);
                 return Ok(resultado);
@@ -198,7 +198,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 Tema tema = this.TemaHandler.PegarTema(id);
 
@@ -223,7 +223,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 List<Tema> temas = this.TemaHandler.PegarTemasPorDescricao(tema);
 
@@ -248,7 +248,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 List<Tema> temas = this.TemaHandler.PegarTemas();
 
@@ -273,7 +273,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 string resultado = this.TemaHandler.InsereTema(tema);
                 return Ok(resultado);
@@ -294,7 +294,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 string resultado = this.TemaHandler.AlteraTema(tema);
                 return Ok(resultado);
@@ -315,7 +315,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 string resultado = this.TemaHandler.DeletaTema(idTema);
                 return Ok(resultado);
@@ -338,7 +338,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 List<Experiencia> experiencias = this.ExperienciaHandler.PegarExperiencias();
 
@@ -364,7 +364,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 string resultado = this.ExperienciaHandler.InsereExperiencia(experiencia);
                 return Ok(resultado);
@@ -385,7 +385,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 string resultado = this.ExperienciaHandler.AlteraExperiencia(experiencia);
                 return Ok(resultado);
@@ -406,7 +406,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 string resultado = this.ExperienciaHandler.DeletaExperiencia(idExperiencia);
                 return Ok(resultado);
@@ -429,7 +429,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 List<Skin> skins = this.SkinHandler.PegarSkinsPorDescricao(descricaoSkin);
 
@@ -454,7 +454,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 List<Skin> skins = this.SkinHandler.PegarSkinsPorNivel(nivel);
 
@@ -479,7 +479,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 Skin skin = this.SkinHandler.PegarSkin(id);
 
@@ -504,7 +504,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 List<Skin> skins = this.SkinHandler.PegarSkins();
 
@@ -529,7 +529,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 string resultado = this.SkinHandler.InsereSkin(skin);
                 return Ok(resultado);
@@ -550,7 +550,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 string resultado = this.SkinHandler.AlteraSkin(skin);
                 return Ok(resultado);
@@ -571,7 +571,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             try
             {
                 if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado essa operação");
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
 
                 string resultado = this.SkinHandler.DeletaSkin(idSkin);
                 return Ok(resultado);

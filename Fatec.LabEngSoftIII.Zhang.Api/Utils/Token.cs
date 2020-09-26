@@ -45,8 +45,8 @@ namespace Fatec.LabEngSoftIII.Zhang.API.Utils
             var tokenLido = new JwtSecurityTokenHandler().ReadJwtToken(tokenLimpo);
 
             Usuario usuario = new Usuario();
-            string login = tokenLido.Claims.Where(e => e.Type.Equals("unique_name")).FirstOrDefault().Value;
-            int id = int.Parse(tokenLido.Claims.Where(e => e.Type.Equals("nameid")).FirstOrDefault().Value);
+            string login = tokenLido.Claims.Where(e => e.Type.Equals("nameid")).FirstOrDefault().Value;
+            int id = int.Parse(tokenLido.Claims.Where(e => e.Type.Equals("unique_name")).FirstOrDefault().Value);
 
             string novoToken = Gerar(login, id);
 
@@ -59,7 +59,7 @@ namespace Fatec.LabEngSoftIII.Zhang.API.Utils
                 return false;
 
             var tokenLido = new JwtSecurityTokenHandler().ReadJwtToken(token);
-            int id = int.Parse(tokenLido.Claims.Where(e => e.Type.Equals("nameid")).FirstOrDefault().Value);
+            int id = int.Parse(tokenLido.Claims.Where(e => e.Type.Equals("unique_name")).FirstOrDefault().Value);
 
             return id == 1;
         }
