@@ -1,4 +1,5 @@
 ﻿using Fatec.LabEngSoftIII.Zhang.Api.Entidades;
+using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Entradas;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,20 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
         public Skin PegarSkinPeloId(int id)
         {
             return Context.Skins.Where(s => s.Id == id).FirstOrDefault();
+        }
+
+        public void AlteracaoSkins(List<ReqSkin> skins, int idUsuario)
+        {
+            foreach (ReqSkin skin in skins)
+            {
+                UsuarioSkin usuarioSkin = this.Context.UsuarioSkins.FirstOrDefault(u => u.IdUsuario == idUsuario && u.IdSkin == skin.Id);
+
+                if (usuarioSkin == null)
+                    continue;
+
+                usuarioSkin.Ativo = skin.Ativo;
+            }
+            this.Context.SaveChanges();
         }
     }
 }

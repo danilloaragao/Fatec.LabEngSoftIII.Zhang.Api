@@ -1,7 +1,10 @@
 ﻿using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Entradas;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas;
+using Fatec.LabEngSoftIII.Zhang.Api.Handles;
+using Fatec.LabEngSoftIII.Zhang.API.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,6 +14,9 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
     [ApiController]
     public class JogoController : ControllerBase
     {
+        private readonly JogoHandler JogoHandler = new JogoHandler();
+        private readonly Token Token = new Token();
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(RespPalavraJogo))]
         [Route("Palavra")]
@@ -82,10 +88,22 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [Route("Skins")]
-        public ActionResult AlteracaoSkins([FromBody] List<ReqSkin> skins)
+        public ActionResult AlteracaoSkins([FromBody] List<ReqSkin> skins, [FromHeader] string token)
         {
-            return Ok("Skins atualizadas com sucesso");
+            try
+            {
+                if (!Token.Validar(token))
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
+
+                return Ok(JogoHandler.AlteracaoSkins(skins, Token.PegarId(token)));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
+            }
         }
     }
 }

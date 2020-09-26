@@ -10,12 +10,12 @@ namespace Fatec.LabEngSoftIII.Zhang.API.Utils
 {
     public class Token
     {
-        private string _key { get; set; }
+        private string Key { get; set; }
 
         public Token()
         {
             Config config = new Config();
-            this._key = config.ChaveCriptografia;
+            this.Key = config.ChaveCriptografia;
         }
 
         public string Gerar(string nome, int id)
@@ -26,7 +26,7 @@ namespace Fatec.LabEngSoftIII.Zhang.API.Utils
                 new Claim(JwtRegisteredClaimNames.NameId, nome),
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this._key));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.Key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             JwtSecurityToken token = new JwtSecurityToken(
@@ -62,6 +62,12 @@ namespace Fatec.LabEngSoftIII.Zhang.API.Utils
             int id = int.Parse(tokenLido.Claims.Where(e => e.Type.Equals("unique_name")).FirstOrDefault().Value);
 
             return id == 1;
+        }
+
+        public int PegarId(string token)
+        {
+            var tokenLido = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            return int.Parse(tokenLido.Claims.Where(e => e.Type.Equals("unique_name")).FirstOrDefault().Value);
         }
     }
 }
