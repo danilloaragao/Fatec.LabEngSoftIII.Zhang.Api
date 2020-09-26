@@ -7,11 +7,14 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 {
     public class TemaHandler
     {
-        private TemaBD _temaBD = new TemaBD();
+        readonly private TemaBD TemaBD = new TemaBD();
 
-        public Tema PegarTema(int id)
+        public Tema PegarTema(int? id)
         {
-            return this._temaBD.PegarTema(id);
+            if (id == null)
+                return null;
+
+            return this.TemaBD.PegarTema(id ?? 0);
         }
 
         public List<Tema> PegarTemasPorDescricao(string tema)
@@ -19,16 +22,19 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             if (string.IsNullOrWhiteSpace(tema))
                 return null;
 
-            return this._temaBD.PegarTemasPorDescricao(tema);
+            return this.TemaBD.PegarTemasPorDescricao(tema);
         }
 
         public List<Tema> PegarTemas()
         {
-            return this._temaBD.PegarTemas();
+            return this.TemaBD.PegarTemas();
         }
 
         public string InsereTema(Tema tema)
         {
+            if (tema == null)
+                return "Falha ao receber as informações do tema";
+
             if (string.IsNullOrWhiteSpace(tema.Descricao))
                 return "A descrição não pode estar em branco";
 
@@ -37,30 +43,36 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             if (temas.Any(t => t.Descricao.ToUpper().Equals(tema.Descricao.ToUpper())))
                 return "Tema já existe no banco de dados";
 
-            return this._temaBD.InsereTema(tema);
+            return this.TemaBD.InsereTema(tema);
         }
 
         public string AlteraTema(Tema tema)
         {
+            if (tema == null)
+                return "Falha ao receber as informações do tema";
+
             Tema temaBd = PegarTema(tema.Id);
 
             if (temaBd == null)
-                return "Id não existe no banco de dados";
+                return "Id não encontrado no banco de dados";
 
             if (string.IsNullOrWhiteSpace(tema.Descricao))
                 return "A descrição não pode estar em branco";
 
-            return this._temaBD.AlteraPalavra(tema);
+            return this.TemaBD.AlteraPalavra(tema);
         }
 
-        public string DeletaTema(int idTema)
+        public string DeletaTema(int? idTema)
         {
-            Tema temaBd = PegarTema(idTema);
+            if (idTema == null)
+                return null;
+
+            Tema temaBd = PegarTema(idTema ?? 0);
 
             if (temaBd == null)
-                return "Id não existe no banco de dados";
+                return "Id não encontrado no banco de dados";
 
-            return this._temaBD.DeletaTema(idTema);
+            return this.TemaBD.DeletaTema(idTema ?? 0);
         }
     }
 }

@@ -11,8 +11,10 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
     [ApiController]
     public class AdministracaoController : ControllerBase
     {
-        private PalavraHandler _palavraHandler = new PalavraHandler();
-        private TemaHandler _temaHandler = new TemaHandler();
+        readonly private PalavraHandler PalavraHandler = new PalavraHandler();
+        readonly private TemaHandler TemaHandler = new TemaHandler();
+        readonly private ExperienciaHandler ExperienciaHandler = new ExperienciaHandler();
+        readonly private SkinHandler SkinHandler = new SkinHandler();
 
         #region Palavras
         [HttpGet]
@@ -24,7 +26,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         {
             try
             {
-                List<PalavraJogo> palavras = this._palavraHandler.PegarPalavrasPorTema(tema);
+                List<PalavraJogo> palavras = this.PalavraHandler.PegarPalavrasPorTema(tema);
 
                 if (palavras == null)
                     return NotFound("Tema não encontrado no banco de dados.");
@@ -44,11 +46,11 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PalavraJogo))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [Route("PalavraPorId")]
-        public ActionResult PegarPalavra([FromQuery] int id)
+        public ActionResult PegarPalavra([FromQuery] int? id)
         {
             try
             {
-                PalavraJogo palavra = this._palavraHandler.PegarPalavra(id);
+                PalavraJogo palavra = this.PalavraHandler.PegarPalavra(id);
 
                 if (palavra == null)
                     return NotFound("Id não encontrado no banco de dados.");
@@ -69,7 +71,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         {
             try
             {
-                List<PalavraJogo> palavras = this._palavraHandler.PegarPalavrasPorTrecho(palavra);
+                List<PalavraJogo> palavras = this.PalavraHandler.PegarPalavrasPorTrecho(palavra);
 
                 if (palavras == null || palavras.Count == 0)
                     return NotFound("Palavra não encontrada no banco de dados.");
@@ -90,7 +92,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         {
             try
             {
-                List<PalavraJogo> palavras = this._palavraHandler.PegarTodasPalavras();
+                List<PalavraJogo> palavras = this.PalavraHandler.PegarTodasPalavras();
 
                 if (palavras == null || palavras.Count == 0)
                     return NotFound("Não existem palavras no banco de dados.");
@@ -111,7 +113,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         {
             try
             {
-                string resultado = this._palavraHandler.InserePalavra(palavra);
+                string resultado = this.PalavraHandler.InserePalavra(palavra);
                 return Ok(resultado);
             }
             catch (Exception ex)
@@ -128,7 +130,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         {
             try
             {
-                string resultado = this._palavraHandler.AlteraPalavra(palavra);
+                string resultado = this.PalavraHandler.AlteraPalavra(palavra);
                 return Ok(resultado);
             }
             catch (Exception ex)
@@ -141,11 +143,11 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [Route("Palavra")]
-        public ActionResult DeletaPalavra([FromBody] int idPalavra)
+        public ActionResult DeletaPalavra([FromBody] int? idPalavra)
         {
             try
             {
-                string resultado = this._palavraHandler.DeletaPalavra(idPalavra);
+                string resultado = this.PalavraHandler.DeletaPalavra(idPalavra);
                 return Ok(resultado);
             }
             catch (Exception ex)
@@ -160,12 +162,11 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Tema))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [Route("TemaPorId")]
-        public ActionResult PegarTema([FromQuery] int id)
+        public ActionResult PegarTema([FromQuery] int? id)
         {
-
             try
             {
-                Tema tema = this._temaHandler.PegarTema(id);
+                Tema tema = this.TemaHandler.PegarTema(id);
 
                 if (tema == null)
                     return NotFound("Id não encontrado no banco de dados.");
@@ -186,7 +187,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         {
             try
             {
-                List<Tema> temas = this._temaHandler.PegarTemasPorDescricao(tema);
+                List<Tema> temas = this.TemaHandler.PegarTemasPorDescricao(tema);
 
                 if (temas == null || temas.Count == 0)
                     return NotFound("Tema não encontrada no banco de dados.");
@@ -207,7 +208,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         {
             try
             {
-                List<Tema> temas = this._temaHandler.PegarTemas();
+                List<Tema> temas = this.TemaHandler.PegarTemas();
 
                 if (temas == null || temas.Count == 0)
                     return NotFound("Não existem temas no banco de dados.");
@@ -228,7 +229,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         {
             try
             {
-                string resultado = this._temaHandler.InsereTema(tema);
+                string resultado = this.TemaHandler.InsereTema(tema);
                 return Ok(resultado);
             }
             catch (Exception ex)
@@ -245,7 +246,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         {
             try
             {
-                string resultado = this._temaHandler.AlteraTema(tema);
+                string resultado = this.TemaHandler.AlteraTema(tema);
                 return Ok(resultado);
             }
             catch (Exception ex)
@@ -258,11 +259,11 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [Route("Tema")]
-        public ActionResult DeletaTema([FromBody] int idTema)
+        public ActionResult DeletaTema([FromBody] int? idTema)
         {
             try
             {
-                string resultado = this._temaHandler.DeletaTema(idTema);
+                string resultado = this.TemaHandler.DeletaTema(idTema);
                 return Ok(resultado);
             }
             catch (Exception ex)
@@ -281,24 +282,13 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         {
             try
             {
-                return Ok(new List<Experiencia>()
-            {
-                new Experiencia()
-            {
-                Valor = 100,
-                Nivel = 2
-            },
-                new Experiencia()
-            {
-                Valor = 200,
-                Nivel = 3
-            },
-                new Experiencia()
-            {
-                Valor = 300,
-                Nivel = 4
-            },
-            });
+                List<Experiencia> experiencias = this.ExperienciaHandler.PegarExperiencias();
+
+                if (experiencias == null || experiencias.Count == 0)
+                    return NotFound("Não existem experiencias no banco de dados.");
+
+                return Ok(experiencias);
+
             }
             catch (Exception ex)
             {
@@ -314,7 +304,8 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         {
             try
             {
-                return Ok("Experiencia inserida com sucesso.");
+                string resultado = this.ExperienciaHandler.InsereExperiencia(experiencia);
+                return Ok(resultado);
             }
             catch (Exception ex)
             {
@@ -330,7 +321,8 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         {
             try
             {
-                return Ok("Experiencia atualizada com sucesso.");
+                string resultado = this.ExperienciaHandler.AlteraExperiencia(experiencia);
+                return Ok(resultado);
             }
             catch (Exception ex)
             {
@@ -342,11 +334,12 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [Route("Experiencia")]
-        public ActionResult DeletaExperiencia([FromBody] Experiencia experiencia)
+        public ActionResult DeletaExperiencia([FromBody] int? idExperiencia)
         {
             try
             {
-                return Ok("Experiencia deletada com sucesso.");
+                string resultado = this.ExperienciaHandler.DeletaExperiencia(idExperiencia);
+                return Ok(resultado);
             }
             catch (Exception ex)
             {
@@ -360,26 +353,16 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Skin>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [Route("SkinsPorDescricao")]
-        public ActionResult PegarSkinsPorDescricao([FromQuery] string descricao)
+        public ActionResult PegarSkinsPorDescricao([FromQuery] string descricaoSkin)
         {
-
             try
             {
-                return Ok(new List<Skin>()
-            {
-                new Skin()
-            {
-                Id = 1,
-                Descricao = "Mock 1",
-                Nivel = 1
-            },
-                new Skin()
-            {
-                Id = 2,
-                Descricao = "Mock 2",
-                Nivel = 2
-            }
-            });
+                List<Skin> skins = this.SkinHandler.PegarSkinsPorDescricao(descricaoSkin);
+
+                if (skins == null || skins.Count == 0)
+                    return NotFound("Skin não encontrada no banco de dados.");
+
+                return Ok(skins);
             }
             catch (Exception ex)
             {
@@ -391,26 +374,16 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Skin>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [Route("SkinsPorNivel")]
-        public ActionResult PegarSkinsPorNivel([FromQuery] int nivel)
+        public ActionResult PegarSkinsPorNivel([FromQuery] int? nivel)
         {
             try
             {
+                List<Skin> skins = this.SkinHandler.PegarSkinsPorNivel(nivel);
 
-                return Ok(new List<Skin>()
-            {
-                new Skin()
-            {
-                Id = 1,
-                Descricao = "Mock 1",
-                Nivel = 1
-            },
-                new Skin()
-            {
-                Id = 2,
-                Descricao = "Mock 2",
-                Nivel = 2
-            }
-            });
+                if (skins == null || skins.Count == 0)
+                    return NotFound("Não foi encontrada nenhuma skin para esse nível no banco de dados.");
+
+                return Ok(skins);
             }
             catch (Exception ex)
             {
@@ -422,17 +395,16 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Skin))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [Route("SkinPorId")]
-        public ActionResult PegarPalavras([FromQuery] int id)
+        public ActionResult PegarSkin([FromQuery] int? id)
         {
             try
             {
+                Skin skin = this.SkinHandler.PegarSkin(id);
 
-                return Ok(new Skin()
-                {
-                    Id = 2,
-                    Descricao = "Mock 2",
-                    Nivel = 2
-                });
+                if (skin == null)
+                    return NotFound("Id não encontrado no banco de dados.");
+
+                return Ok(skin);
             }
             catch (Exception ex)
             {
@@ -448,22 +420,12 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         {
             try
             {
+                List<Skin> skins = this.SkinHandler.PegarSkins();
 
-                return Ok(new List<Skin>()
-            {
-                new Skin()
-            {
-                Id = 1,
-                Descricao = "Mock 1",
-                Nivel = 1
-            },
-                new Skin()
-            {
-                Id = 2,
-                Descricao = "Mock 2",
-                Nivel = 2
-            }
-            });
+                if (skins == null || skins.Count == 0)
+                    return NotFound("Não existem skins no banco de dados.");
+
+                return Ok(skins);
             }
             catch (Exception ex)
             {
@@ -479,7 +441,8 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         {
             try
             {
-                return Ok("Skin inserida com sucesso.");
+                string resultado = this.SkinHandler.InsereSkin(skin);
+                return Ok(resultado);
             }
             catch (Exception ex)
             {
@@ -495,7 +458,8 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         {
             try
             {
-                return Ok("Skin atualizada com sucesso.");
+                string resultado = this.SkinHandler.AlteraSkin(skin);
+                return Ok(resultado);
             }
             catch (Exception ex)
             {
@@ -507,11 +471,12 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [Route("Skin")]
-        public ActionResult DeletaSkin([FromBody] Skin skin)
+        public ActionResult DeletaSkin([FromBody] int? idSkin)
         {
             try
             {
-                return Ok("Skin deletada com sucesso.");
+                string resultado = this.SkinHandler.DeletaSkin(idSkin);
+                return Ok(resultado);
             }
             catch (Exception ex)
             {

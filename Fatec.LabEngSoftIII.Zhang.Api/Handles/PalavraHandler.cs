@@ -10,18 +10,21 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 {
     public class PalavraHandler
     {
-        private PalavraBD _palavraBD = new PalavraBD();
+        readonly private PalavraBD PalavraBD = new PalavraBD();
         public List<PalavraJogo> PegarPalavrasPorTema(string tema)
         {
             if (string.IsNullOrWhiteSpace(tema))
                 return null;
 
-            return this._palavraBD.PegarPalavrasPorTema(tema);
+            return this.PalavraBD.PegarPalavrasPorTema(tema);
         }
 
-        public PalavraJogo PegarPalavra(int id)
+        public PalavraJogo PegarPalavra(int? id)
         {
-            return this._palavraBD.PegarPalavra(id);
+            if (id == null)
+                return null;
+
+            return this.PalavraBD.PegarPalavra(id ?? 0);
         }
 
         public List<PalavraJogo> PegarPalavrasPorTrecho(string palavra)
@@ -29,16 +32,19 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             if (string.IsNullOrWhiteSpace(palavra))
                 return null;
 
-            return this._palavraBD.PegarPalavrasPorTrecho(palavra);
+            return this.PalavraBD.PegarPalavrasPorTrecho(palavra);
         }
 
         public List<PalavraJogo> PegarTodasPalavras()
         {
-            return this._palavraBD.PegarTodasPalavras();
+            return this.PalavraBD.PegarTodasPalavras();
         }
 
         public string InserePalavra(PalavraJogo palavra)
         {
+            if (palavra == null)
+                return "Falha ao receber as informações da palavra";
+
             List<string> incosistencias = new List<string>();
 
             if (string.IsNullOrWhiteSpace(palavra.Palavra))
@@ -66,17 +72,20 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             if (incosistencias.Count > 0)
                 return string.Join(" - ", incosistencias);
 
-            return this._palavraBD.InserePalavra(palavra);
+            return this.PalavraBD.InserePalavra(palavra);
         }
 
         public string AlteraPalavra(PalavraJogo palavra)
         {
+            if (palavra == null)
+                return "Falha ao receber as informações da palavra";
+
             List<string> incosistencias = new List<string>();
 
             PalavraJogo palavraBd = PegarPalavra(palavra.Id);
 
             if (palavraBd == null)
-                return "Id não existe no banco de dados";
+                return "Id não encontrado no banco de dados";
 
 
             if (string.IsNullOrWhiteSpace(palavra.Palavra))
@@ -98,17 +107,20 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             if (incosistencias.Count > 0)
                 return string.Join(" - ", incosistencias);
 
-            return this._palavraBD.AlteraPalavra(palavra);
+            return this.PalavraBD.AlteraPalavra(palavra);
         }
 
-        public string DeletaPalavra(int idPalavra)
+        public string DeletaPalavra(int? idPalavra)
         {
-            PalavraJogo palavraBd = PegarPalavra(idPalavra);
+            if (idPalavra == null)
+                return "Falha ao receber id da palavra";
+
+            PalavraJogo palavraBd = PegarPalavra(idPalavra ?? 0);
 
             if (palavraBd == null)
-                return "Id não existe no banco de dados";
+                return "Id não encontrado no banco de dados";
 
-            return this._palavraBD.DeletaPalavra(idPalavra);
+            return this.PalavraBD.DeletaPalavra(idPalavra ?? 0);
         }
     }
 }

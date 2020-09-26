@@ -6,45 +6,45 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 {
     public class TemaBD
     {
-        Context _context = new Context();
+        readonly private Context Context = new Context();
         public Tema PegarTema(int id)
         {
-            return this._context.Temas.Where(t => t.Id == id).FirstOrDefault();
+            return this.Context.Temas.Where(t => t.Id == id).FirstOrDefault();
         }
 
         public List<Tema> PegarTemasPorDescricao(string tema)
         {
-            return this._context.Temas.Where(p => p.Descricao.ToUpper().Contains(tema.ToUpper())).ToList();
+            return this.Context.Temas.Where(p => p.Descricao.ToUpper().Contains(tema.ToUpper())).OrderBy(p => p.Id).ToList();
         }
 
         public List<Tema> PegarTemas()
         {
-            return this._context.Temas.ToList();
+            return this.Context.Temas.OrderBy(p => p.Id).ToList();
         }
 
         public string InsereTema(Tema tema)
         {
-            this._context.Temas.Add(tema);
-            this._context.SaveChanges();
+            this.Context.Temas.Add(tema);
+            this.Context.SaveChanges();
             return "Tema cadastrado com sucesso";
         }
 
         public string AlteraPalavra(Tema tema)
         {
-            Tema temaBd = this._context.Temas.FirstOrDefault(t => t.Id == tema.Id);
+            Tema temaBd = this.Context.Temas.FirstOrDefault(t => t.Id == tema.Id);
 
             temaBd.Descricao = tema.Descricao;
-            this._context.SaveChanges();
+            this.Context.SaveChanges();
 
             return "Tema atualizado com sucesso";
         }
 
         public string DeletaTema(int idTema)
         {
-            Tema temaBd = this._context.Temas.FirstOrDefault(t => t.Id == idTema);
+            Tema temaBd = this.Context.Temas.FirstOrDefault(t => t.Id == idTema);
 
-            this._context.Temas.Remove(temaBd);
-            this._context.SaveChanges();
+            this.Context.Temas.Remove(temaBd);
+            this.Context.SaveChanges();
             return "Tema deletado com sucesso.";
         }
     }
