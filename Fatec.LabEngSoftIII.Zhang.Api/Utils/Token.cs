@@ -41,6 +41,9 @@ namespace Fatec.LabEngSoftIII.Zhang.API.Utils
 
         public bool Validar(string token)
         {
+            if (string.IsNullOrWhiteSpace(token))
+                return false;
+
             string tokenLimpo = token.Replace("Bearer", "").Replace("Authentication", "").Trim();
             var tokenLido = new JwtSecurityTokenHandler().ReadJwtToken(tokenLimpo);
 

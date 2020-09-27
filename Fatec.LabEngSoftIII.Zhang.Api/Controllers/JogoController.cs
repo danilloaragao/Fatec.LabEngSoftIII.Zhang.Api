@@ -45,45 +45,27 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RespUsuario))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(String))]
         [Route("Acerto")]
-        public ActionResult Acerto([FromBody] ReqAcerto acerto)
+        public ActionResult Acerto([FromBody] ReqAcerto acerto, [FromHeader] string token)
         {
-            RespUsuario resp = new RespUsuario()
+            try
             {
-                Id = 1,
-                Email = "mock@mock.com.br",
-                Login = "Mock",
-                Experiencia = 400,
-                ExperienciaProximoNivel = 50,
-                Nivel = 4,
-                Skins = new List<RespSkin>()
-                {
-                    new RespSkin()
-                    {
-                        Id = 1,
-                        Nivel = 1,
-                        Descricao = "Skin 1",
-                        Ativo = false
-                    } ,
-                    new RespSkin()
-                    {
-                        Id = 2,
-                        Nivel = 2,
-                        Descricao = "Skin 2",
-                        Ativo = true
-                    } ,
-                    new RespSkin()
-                    {
-                        Id = 3,
-                        Nivel = 3,
-                        Descricao = "Skin 3",
-                        Ativo = false
-                    }
-                },
-                Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                if (!Token.Validar(token))
+                    return Ok("Jogador convidado.");
 
-            };
-            return Ok(resp);
+                RespUsuario resposta = JogoHandler.AcertoPalavra(acerto, Token.PegarId(token));
+
+                if(resposta == null)
+                    return StatusCode(400 ,"Ocorreu uma falha no processamento. A palavra acertada não pode ser lida.");
+
+                return Ok(resposta);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
+            }
         }
 
         [HttpPut]

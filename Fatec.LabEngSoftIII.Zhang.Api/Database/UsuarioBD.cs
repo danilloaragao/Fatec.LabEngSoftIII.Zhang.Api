@@ -19,6 +19,13 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             return Context.Usuarios.FirstOrDefault(u => u.Email.Equals(email));
         }
 
+        public Usuario PegarUsuarioPeloId(int id)
+        {
+            Usuario usuario = Context.Usuarios.FirstOrDefault(u => u.Id == id);
+            Context.Entry(usuario).Reload();
+            return usuario;
+        }
+
         public string CadastrarUsuario(Usuario usuario)
         {
           usuario.Senha = Criptografia.Criptografar(usuario.Senha);

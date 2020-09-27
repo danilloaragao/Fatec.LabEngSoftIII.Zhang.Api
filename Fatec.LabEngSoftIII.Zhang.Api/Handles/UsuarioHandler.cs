@@ -23,34 +23,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             if (usuarioBD == null || !credenciais.Senha.Equals(Criptografia.Decriptografar(usuarioBD.Senha)))
                 return null;
 
-            RespUsuario usuario = new RespUsuario
-            {
-                Id = usuarioBD.Id,
-                Login = usuarioBD.Login,
-                Email = usuarioBD.Email,
-                Experiencia = usuarioBD.Experiencia
-            };
-
-            List<Experiencia> experiencia = JogoBD.PegarExperiencias();
-
-            List<Experiencia> niveisAbaixo = experiencia.Where(e => e.Valor < usuario.Experiencia).ToList();
-
-            if (niveisAbaixo == null || niveisAbaixo.Count == 0)
-                usuario.Nivel = 0;
-            else
-                usuario.Nivel = niveisAbaixo.Max(e => e.Nivel);
-
-            List<Experiencia> niveisAcima = experiencia.Where(e => e.Valor > usuario.Experiencia).ToList();
-
-            if (niveisAcima == null || niveisAcima.Count == 0)
-                usuario.ExperienciaProximoNivel = 0;
-            else
-                usuario.ExperienciaProximoNivel = niveisAcima.Min(e => e.Valor) - usuario.Experiencia;
-
-            usuario.Skins = JogoBD.PegarSkinsUsuario(usuario.Id) ?? new List<RespSkin>();
-            usuario.Token = Token.Gerar(usuario.Login, usuario.Id);
-
-            return usuario;
+            return MontarRespUsuario(usuarioBD);
         }
         
         public string Cadastro(Usuario usuario)
@@ -98,6 +71,36 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             return this.UsuarioBD.CadastrarUsuario(usuario);
         }
 
+        public RespUsuario MontarRespUsuario(Usuario usuarioBD)
+        {
+            RespUsuario usuario = new RespUsuario
+            {
+                Id = usuarioBD.Id,
+                Login = usuarioBD.Login,
+                Email = usuarioBD.Email,
+                Experiencia = usuarioBD.Experiencia
+            };
 
+            List<Experiencia> experiencia = JogoBD.PegarExperiencias();
+
+            List<Experiencia> niveisAbaixo = experiencia.Where(e => e.Valor < usuario.Experiencia).ToList();
+
+            if (niveisAbaixo == null || niveisAbaixo.Count == 0)
+                usuario.Nivel = 0;
+            else
+                usuario.Nivel = niveisAbaixo.Max(e => e.Nivel);
+
+            List<Experiencia> niveisAcima = experiencia.Where(e => e.Valor > usuario.Experiencia).ToList();
+
+            if (niveisAcima == null || niveisAcima.Count == 0)
+                usuario.ExperienciaProximoNivel = 0;
+            else
+                usuario.ExperienciaProximoNivel = niveisAcima.Min(e => e.Valor) - usuario.Experiencia;
+
+            usuario.Skins = JogoBD.PegarSkinsUsuario(usuario.Id) ?? new List<RespSkin>();
+            usuario.Token = Token.Gerar(usuario.Login, usuario.Id);
+
+            return usuario;
+        }
     }
 }

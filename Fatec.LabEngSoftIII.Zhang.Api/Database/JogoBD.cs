@@ -58,5 +58,32 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             }
             this.Context.SaveChanges();
         }
+
+        public void AcertoPalavra(int experienciaGanha, int idUsuario)
+        {
+            Usuario usuario = this.Context.Usuarios.FirstOrDefault(u => u.Id == idUsuario);
+
+            usuario.Experiencia += experienciaGanha;
+
+            this.Context.SaveChanges();
+        }
+
+        public void AtualizarSkins(RespUsuario usuario)
+        {
+            List<Skin> skins = Context.Skins.Where(s => s.Nivel == usuario.Nivel).ToList();
+
+            foreach (Skin skin in skins)
+            {
+                UsuarioSkin usuarioSkin = new UsuarioSkin()
+                {
+                    IdSkin = skin.Id,
+                    IdUsuario = usuario.Id,
+                    Ativo = false
+                };
+
+                Context.UsuarioSkins.Add(usuarioSkin);
+            }
+            Context.SaveChanges();
+        }
     }
 }
