@@ -18,7 +18,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [Route("Cadastro")]
         public ActionResult Cadastro([FromBody] Usuario usuario)
         {
-            return Ok("Cadastro efetuado com sucesso");
+            return Ok(this.UsuarioHandler.Cadastro(usuario));
         }
 
         [HttpPost]

@@ -6,6 +6,7 @@ using Fatec.LabEngSoftIII.Zhang.API.Utils;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 {
     public class UsuarioHandler
@@ -51,5 +52,52 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 
             return usuario;
         }
+        
+        public string Cadastro(Usuario usuario)
+        { 
+            if (usuario == null)
+                return "Falha ao receber as informações do usuario";
+
+            List<string> inconsistencias = new List<string>();
+
+            if (string.IsNullOrWhiteSpace(usuario.Login))
+                inconsistencias.Add("Login não pode estar em branco");
+            else
+            {
+                if (usuario.Login.Length < 4)
+                    inconsistencias.Add("Login deve ter no mínimo 4 caracteres");
+                else{
+                    if (this.UsuarioBD.PegarUsuarioPeloLogin(usuario.Login) != null)
+                        inconsistencias.Add("Este login já está em uso");
+                }                
+            }
+
+            if (string.IsNullOrWhiteSpace(usuario.Senha))
+                inconsistencias.Add("Senha não pode estar em branco");
+            else
+            {
+                if (usuario.Senha.Length < 6)
+                    inconsistencias.Add("Senha deve ter no mínimo 6 caracteres");                
+            }
+
+            if (string.IsNullOrWhiteSpace(usuario.Email))
+                inconsistencias.Add("Email não pode estar em branco");
+            else
+            {
+                if (!usuario.Email.Contains("@"))
+                    inconsistencias.Add("Email inválido");
+                else{
+                    if (this.UsuarioBD.PegarUsuarioPeloEmail(usuario.Email) != null)
+                        inconsistencias.Add("Email já foi cadastrado");
+                }                          
+            }
+            
+            if (inconsistencias.Count > 0)
+                return string.Join(" - ", inconsistencias);
+                
+            return this.UsuarioBD.CadastrarUsuario(usuario);
+        }
+
+
     }
 }
