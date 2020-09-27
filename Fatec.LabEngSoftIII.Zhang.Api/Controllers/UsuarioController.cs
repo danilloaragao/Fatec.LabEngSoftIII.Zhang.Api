@@ -4,6 +4,7 @@ using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas;
 using Fatec.LabEngSoftIII.Zhang.Api.Handles;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
 {
@@ -15,10 +16,19 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [Route("Cadastro")]
         public ActionResult Cadastro([FromBody] Usuario usuario)
         {
-            return Ok(this.UsuarioHandler.Cadastro(usuario));
+            try
+            {
+                return Ok(this.UsuarioHandler.Cadastro(usuario));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
+            }
+            
         }
 
         [HttpPost]
