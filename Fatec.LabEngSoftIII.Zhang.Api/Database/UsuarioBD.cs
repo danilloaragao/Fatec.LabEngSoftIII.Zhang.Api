@@ -7,7 +7,6 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
     public class UsuarioBD
     {
         private readonly Context Context = new Context();
-        private readonly Criptografia Criptografia = new Criptografia();
 
         public Usuario PegarUsuarioPeloLogin(string login)
         {
@@ -28,10 +27,18 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 
         public string CadastrarUsuario(Usuario usuario)
         {
-          usuario.Senha = Criptografia.Criptografar(usuario.Senha);
           this.Context.Usuarios.Add(usuario);
           this.Context.SaveChanges();
           return "Cadastro efetuado com sucesso";  
+        }
+
+        public void AtualizarUsuario(Usuario usuario)
+        {
+            Usuario usuarioBD = Context.Usuarios.FirstOrDefault(u => u.Id == usuario.Id);
+            usuarioBD.Senha = usuario.Senha;
+            usuarioBD.Email = usuario.Email;
+
+            Context.SaveChanges();
         }
     }
 }

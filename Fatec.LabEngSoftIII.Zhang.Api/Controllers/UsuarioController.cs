@@ -2,6 +2,7 @@
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Entradas;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas;
 using Fatec.LabEngSoftIII.Zhang.Api.Handles;
+using Fatec.LabEngSoftIII.Zhang.API.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,6 +14,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
     public class UsuarioController : ControllerBase
     {
         private readonly UsuarioHandler UsuarioHandler = new UsuarioHandler();
+        private readonly Token Token = new Token();
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
@@ -28,7 +30,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             {
                 return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
             }
-            
+
         }
 
         [HttpPost]
@@ -41,25 +43,47 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RespUsuario))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [Route("Login")]
         public ActionResult Login([FromBody] ReqCredenciais credenciais)
         {
-            RespUsuario resp = UsuarioHandler.Login(credenciais);
+            try
+            {
+                RespUsuario resp = UsuarioHandler.Login(credenciais);
 
-            if (resp == null)
-                return StatusCode(401, "Usuário ou senha invalido");
+                if (resp == null)
+                    return StatusCode(401, "Usuário ou senha invalido");
 
-            return Ok(resp);
+                return Ok(resp);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
+            }
         }
 
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [Route("AlterarDados")]
-        public ActionResult AlterarDados([FromBody] Usuario usuario)
+        public ActionResult AlterarDados([FromBody] Usuario usuario, [FromHeader] string token)
         {
-            return Ok("Dados atualizados com sucesso");
+            try
+            {
+                if (!Token.Validar(token) || usuario.Id != Token.PegarId(token))
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
+
+                string resposta = UsuarioHandler.AtualizarUsuario(usuario);
+
+                return Ok(resposta);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
+            }
         }
     }
 }

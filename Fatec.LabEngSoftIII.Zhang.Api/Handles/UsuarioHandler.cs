@@ -6,7 +6,6 @@ using Fatec.LabEngSoftIII.Zhang.API.Utils;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 {
     public class UsuarioHandler
@@ -67,7 +66,9 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             
             if (inconsistencias.Count > 0)
                 return string.Join(" - ", inconsistencias);
-                
+
+            usuario.Senha = Criptografia.Criptografar(usuario.Senha);
+
             return this.UsuarioBD.CadastrarUsuario(usuario);
         }
 
@@ -101,6 +102,40 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             usuario.Token = Token.Gerar(usuario.Login, usuario.Id);
 
             return usuario;
+        }
+
+        public string AtualizarUsuario(Usuario usuario)
+        {
+            if (usuario == null)
+                return "Falha ao receber as informações do usuario";
+
+            List<string> inconsistencias = new List<string>();
+
+            if (string.IsNullOrWhiteSpace(usuario.Senha))
+                inconsistencias.Add("Senha não pode estar em branco");
+            else
+            {
+                if (usuario.Senha.Length < 6)
+                    inconsistencias.Add("Senha deve ter no mínimo 6 caracteres");
+            }
+
+            if (string.IsNullOrWhiteSpace(usuario.Email))
+                inconsistencias.Add("Email não pode estar em branco");
+            else
+            {
+                if (!usuario.Email.Contains("@"))
+                    inconsistencias.Add("Email inválido");
+            }
+
+            if (inconsistencias.Count > 0)
+                return string.Join(" - ", inconsistencias);
+
+            usuario.Senha = Criptografia.Criptografar(usuario.Senha);
+
+            UsuarioBD.AtualizarUsuario(usuario);
+
+            return "Dados atualizados com sucesso";
+
         }
     }
 }
