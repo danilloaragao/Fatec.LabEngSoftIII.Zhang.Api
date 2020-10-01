@@ -2,6 +2,7 @@
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Entradas;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas;
+using Fatec.LabEngSoftIII.Zhang.Api.Utils;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,23 +43,26 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             return UsuarioHandler.MontarRespUsuario(UsuarioBD.PegarUsuarioPeloId(idUsuario));
         }
 
-        //public RespUsuario CompraSkin(int idSkin, int idUsuario)
-        //{
-        //    Skin skin = JogoBD.PegarSkinVipPeloId(idSkin);
-        //    if (skin == null)
-        //        return null;
+        public RespUsuario CompraSkin(int idSkin, int idUsuario)
+        {
+            Skin skin = JogoBD.PegarSkinVipPeloId(idSkin);
+            if (skin == null)
+                return null;
 
-        //    Usuario usuario = UsuarioBD.PegarUsuarioPeloId(idUsuario);
-        //    if (usuario == null)
-        //        return null;
+            Usuario usuario = UsuarioBD.PegarUsuarioPeloId(idUsuario);
+            if (usuario == null)
+                return null;
 
-        //    if (skin.ValorCash > usuario.Cash)
-        //        throw new CashInsuficienteException();
+            if (JogoBD.ExisteUsuarioSkin(idSkin, idUsuario))
+                throw new SkinObtidaException();
 
-        //    JogoBD.ComprarSkin(idSkin, idUsuario);
+            if (skin.ValorCash > usuario.Cash)
+                throw new CashInsuficienteException();
 
-        //    return UsuarioHandler.MontarRespUsuario(UsuarioBD.PegarUsuarioPeloId(idUsuario));
-        //}
+            JogoBD.ComprarSkin(idSkin, idUsuario);
+
+            return UsuarioHandler.MontarRespUsuario(UsuarioBD.PegarUsuarioPeloId(idUsuario));
+        }
 
         public List<RespRanking> Ranking(int idUsuario)
         {

@@ -45,10 +45,10 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             return Context.Skins.Where(s => s.Id == id).FirstOrDefault();
         }
 
-        //public Skin PegarSkinVipPeloId(int id)
-        //{
-        //    return Context.Skins.Where(s => s.Id == id && s.IsVip).FirstOrDefault();
-        //}
+        public Skin PegarSkinVipPeloId(int id)
+        {
+            return Context.Skins.Where(s => s.Id == id && s.IsVip).FirstOrDefault();
+        }
 
         public void AlteracaoSkins(List<ReqSkin> skins, int idUsuario)
         {
@@ -75,7 +75,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 
         public void AtualizarSkins(RespUsuario usuario)
         {
-            List<Skin> skins = Context.Skins.Where(s => s.Nivel == usuario.Nivel).ToList();
+            List<Skin> skins = Context.Skins.Where(s => s.Nivel == usuario.Nivel && !s.IsVip).ToList();
 
             foreach (Skin skin in skins)
             {
@@ -91,18 +91,18 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             Context.SaveChanges();
         }
 
-        //public void ComprarSkin(int idSkin, int idUsuario)
-        //{
-        //    UsuarioSkin usuarioSkin = new UsuarioSkin
-        //    {
-        //        IdSkin = idSkin,
-        //        IdUsuario = idUsuario,
-        //        Ativo = false
-        //    };
-        //    Context.UsuarioSkins.Add(usuarioSkin);
-        //    Context.Usuarios.FirstOrDefault(u => u.Id == idUsuario).Cash -= Context.Skins.FirstOrDefault(s => s.Id == idSkin).ValorCash;
-        //    Context.SaveChanges();
-        //}
+        public void ComprarSkin(int idSkin, int idUsuario)
+        {
+            UsuarioSkin usuarioSkin = new UsuarioSkin
+            {
+                IdSkin = idSkin,
+                IdUsuario = idUsuario,
+                Ativo = false
+            };
+            Context.UsuarioSkins.Add(usuarioSkin);
+            Context.Usuarios.FirstOrDefault(u => u.Id == idUsuario).Cash -= Context.Skins.FirstOrDefault(s => s.Id == idSkin).ValorCash;
+            Context.SaveChanges();
+        }
 
         public List<Usuario> TopCinco()
         {
@@ -112,6 +112,11 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
         public int PegarColocacaoPelaExperiencia(int experiencia)
         {
             return Context.Usuarios.Where(u => !u.IsAdmin).Count(u => u.Experiencia > experiencia) + 1;
+        }
+
+        public bool ExisteUsuarioSkin(int idSkin, int idUsuario)
+        {
+            return Context.UsuarioSkins.Any(u => u.IdSkin == idSkin && u.IdUsuario == idUsuario);
         }
     }
 }
