@@ -45,10 +45,10 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             return Context.Skins.Where(s => s.Id == id).FirstOrDefault();
         }
 
-        public Skin PegarSkinVipPeloId(int id)
-        {
-            return Context.Skins.Where(s => s.Id == id && s.IsVip).FirstOrDefault();
-        }
+        //public Skin PegarSkinVipPeloId(int id)
+        //{
+        //    return Context.Skins.Where(s => s.Id == id && s.IsVip).FirstOrDefault();
+        //}
 
         public void AlteracaoSkins(List<ReqSkin> skins, int idUsuario)
         {
@@ -91,17 +91,27 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             Context.SaveChanges();
         }
 
-        public void ComprarSkin(int idSkin, int idUsuario)
+        //public void ComprarSkin(int idSkin, int idUsuario)
+        //{
+        //    UsuarioSkin usuarioSkin = new UsuarioSkin
+        //    {
+        //        IdSkin = idSkin,
+        //        IdUsuario = idUsuario,
+        //        Ativo = false
+        //    };
+        //    Context.UsuarioSkins.Add(usuarioSkin);
+        //    Context.Usuarios.FirstOrDefault(u => u.Id == idUsuario).Cash -= Context.Skins.FirstOrDefault(s => s.Id == idSkin).ValorCash;
+        //    Context.SaveChanges();
+        //}
+
+        public List<Usuario> TopCinco()
         {
-            UsuarioSkin usuarioSkin = new UsuarioSkin
-            {
-                IdSkin = idSkin,
-                IdUsuario = idUsuario,
-                Ativo = false
-            };
-            Context.UsuarioSkins.Add(usuarioSkin);
-            Context.Usuarios.FirstOrDefault(u => u.Id == idUsuario).Cash -= Context.Skins.FirstOrDefault(s => s.Id == idSkin).ValorCash;
-            Context.SaveChanges();
+            return Context.Usuarios.Where(u => !u.IsAdmin).OrderByDescending(u => u.Experiencia).Take(5).ToList();
+        }
+
+        public int PegarColocacaoPelaExperiencia(int experiencia)
+        {
+            return Context.Usuarios.Where(u => !u.IsAdmin).Count(u => u.Experiencia > experiencia) + 1;
         }
     }
 }

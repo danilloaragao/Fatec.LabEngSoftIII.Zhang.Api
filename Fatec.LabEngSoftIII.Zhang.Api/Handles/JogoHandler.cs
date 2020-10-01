@@ -2,10 +2,8 @@
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Entradas;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas;
-using Fatec.LabEngSoftIII.Zhang.Api.Utils;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 {
@@ -44,22 +42,70 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             return UsuarioHandler.MontarRespUsuario(UsuarioBD.PegarUsuarioPeloId(idUsuario));
         }
 
-        public RespUsuario CompraSkin(int idSkin, int idUsuario)
+        //public RespUsuario CompraSkin(int idSkin, int idUsuario)
+        //{
+        //    Skin skin = JogoBD.PegarSkinVipPeloId(idSkin);
+        //    if (skin == null)
+        //        return null;
+
+        //    Usuario usuario = UsuarioBD.PegarUsuarioPeloId(idUsuario);
+        //    if (usuario == null)
+        //        return null;
+
+        //    if (skin.ValorCash > usuario.Cash)
+        //        throw new CashInsuficienteException();
+
+        //    JogoBD.ComprarSkin(idSkin, idUsuario);
+
+        //    return UsuarioHandler.MontarRespUsuario(UsuarioBD.PegarUsuarioPeloId(idUsuario));
+        //}
+
+        public List<RespRanking> Ranking(int idUsuario)
         {
-            Skin skin = JogoBD.PegarSkinVipPeloId(idSkin);
-            if (skin == null)
-                return null;
+            List<RespRanking> rankings = new List<RespRanking>();
+            List<Experiencia> experiencia = JogoBD.PegarExperiencias();
 
-            Usuario usuario = UsuarioBD.PegarUsuarioPeloId(idUsuario);
-            if (usuario == null)
-                return null;
+            List<Usuario> usuariosTop = JogoBD.TopCinco();
 
-            if (skin.ValorCash > usuario.Cash)
-                throw new CashInsuficienteException();
+            foreach (Usuario usuario in usuariosTop)
+            {
+                RespRanking ranking = new RespRanking();
 
-            JogoBD.ComprarSkin(idSkin, idUsuario);
+                List<Experiencia> niveisAbaixo = experiencia.Where(e => e.Valor < usuario.Experiencia).ToList();
 
-            return UsuarioHandler.MontarRespUsuario(UsuarioBD.PegarUsuarioPeloId(idUsuario));
+                if (niveisAbaixo == null || niveisAbaixo.Count == 0)
+                    ranking.Nivel = 0;
+                else
+                    ranking.Nivel = niveisAbaixo.Max(e => e.Nivel);
+
+                ranking.Login = usuario.Login;
+                ranking.Posicao = usuariosTop.IndexOf(usuario) + 1;
+                ranking.Experiencia = usuario.Experiencia;
+
+                rankings.Add(ranking);
+            }
+
+            if (!usuariosTop.Any(u => u.Id == idUsuario))
+            {
+                Usuario usuario = UsuarioBD.PegarUsuarioPeloId(idUsuario);
+
+                RespRanking ranking = new RespRanking();
+
+                List<Experiencia> niveisAbaixo = experiencia.Where(e => e.Valor < usuario.Experiencia).ToList();
+
+                if (niveisAbaixo == null || niveisAbaixo.Count == 0)
+                    ranking.Nivel = 0;
+                else
+                    ranking.Nivel = niveisAbaixo.Max(e => e.Nivel);
+
+                ranking.Login = usuario.Login;
+                ranking.Experiencia = usuario.Experiencia;
+                ranking.Posicao = JogoBD.PegarColocacaoPelaExperiencia(usuario.Experiencia);
+
+                rankings.Add(ranking);
+            }
+
+            return rankings;
         }
     }
 }
