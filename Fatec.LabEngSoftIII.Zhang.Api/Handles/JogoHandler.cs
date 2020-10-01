@@ -107,5 +107,10 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 
             return rankings;
         }
+
+        public void CompraCash(int qtdCash, int idUsuario)
+        {
+            UsuarioBD.CompraCash(qtdCash, idUsuario);
+        }
     }
 }

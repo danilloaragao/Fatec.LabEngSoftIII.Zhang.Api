@@ -46,5 +46,13 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 
             Context.SaveChanges();
         }
+
+        public void CompraCash(int qtdCash, int idUsuario)
+        {
+            Usuario usuarioBD = Context.Usuarios.FirstOrDefault(u => u.Id == idUsuario);
+            usuarioBD.Cash += qtdCash;
+
+            Context.SaveChanges();
+        }
     }
 }

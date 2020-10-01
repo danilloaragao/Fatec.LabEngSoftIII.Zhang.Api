@@ -137,5 +137,27 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
                 return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
             }
         }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [Route("CompraCash")]
+        public ActionResult CompraCash([FromBody] int qtdCash,[FromHeader] string token)
+        {
+            try
+            {
+                if (!Token.Validar(token))
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
+
+                JogoHandler.CompraCash(qtdCash, Token.PegarId(token));
+
+                return Ok("Compra efetuada com sucesso");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
+            }
+        }
     }
 }
