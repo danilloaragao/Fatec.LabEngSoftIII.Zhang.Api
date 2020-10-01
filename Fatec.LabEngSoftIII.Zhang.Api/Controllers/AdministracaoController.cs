@@ -497,25 +497,25 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             }
         }
 
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Skin))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [Route("SkinsVip")]
-        public ActionResult PegarSkinsVip([FromHeader] string token)
-        {
-            try
-            {
-                if (!Token.ValidarAdm(token))
-                    return StatusCode(401, $"Usuário não autorizado para essa operação");
+        //[HttpGet]
+        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Skin))]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+        //[ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        //[Route("SkinsVip")]
+        //public ActionResult PegarSkinsVip([FromHeader] string token)
+        //{
+        //    try
+        //    {
+        //        if (!Token.ValidarAdm(token))
+        //            return StatusCode(401, $"Usuário não autorizado para essa operação");
 
-                return Ok(this.SkinHandler.PegarSkinsVip());
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
-            }
-        }
+        //        return Ok(this.SkinHandler.PegarSkinsVip());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
+        //    }
+        //}
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Skin>))]

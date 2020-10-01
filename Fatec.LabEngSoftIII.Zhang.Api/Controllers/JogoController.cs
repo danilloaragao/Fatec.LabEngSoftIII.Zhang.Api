@@ -69,34 +69,34 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             }
         }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RespUsuario))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [Route("CompraSkin")]
-        public ActionResult CompraSkin([FromBody] int idSkin, [FromHeader] string token)
-        {
-            try
-            {
-                if (!Token.Validar(token))
-                    return StatusCode(401, $"Usuário não autorizado para essa operação");
+        //[HttpPost]
+        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RespUsuario))]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+        //[ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        //[Route("CompraSkin")]
+        //public ActionResult CompraSkin([FromBody] int idSkin, [FromHeader] string token)
+        //{
+        //    try
+        //    {
+        //        if (!Token.Validar(token))
+        //            return StatusCode(401, $"Usuário não autorizado para essa operação");
 
-                RespUsuario resposta = JogoHandler.CompraSkin(idSkin, Token.PegarId(token));
+        //        RespUsuario resposta = JogoHandler.CompraSkin(idSkin, Token.PegarId(token));
 
-                if (resposta == null)
-                    return StatusCode(400, "Ocorreu uma falha no processamento. Tente novamente mais tarde.");
+        //        if (resposta == null)
+        //            return StatusCode(400, "Ocorreu uma falha no processamento. Tente novamente mais tarde.");
 
-                return Ok(resposta);
-            }
-            catch(CashInsuficienteException ex)
-            {
-                return StatusCode(401, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
-            }
-        }
+        //        return Ok(resposta);
+        //    }
+        //    catch(CashInsuficienteException ex)
+        //    {
+        //        return StatusCode(401, ex.Message);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
+        //    }
+        //}
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
