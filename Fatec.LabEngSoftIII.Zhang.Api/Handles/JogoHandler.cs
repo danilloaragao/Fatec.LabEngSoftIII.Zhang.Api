@@ -125,10 +125,11 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 
             foreach (Skin skin in skinsvip)
             {
-                RespSkinVip respSkinVip = new RespSkinVip();
-
-                respSkinVip.Descricao = skin.Descricao;
-                respSkinVip.Comprada = JogoBD.ExisteUsuarioSkin(skin.Id, idUsuario);
+                RespSkinVip respSkinVip = new RespSkinVip
+                {
+                    Descricao = skin.Descricao,
+                    Comprada = JogoBD.ExisteUsuarioSkin(skin.Id, idUsuario)
+                };
 
                 retorno.Add(respSkinVip);
             }

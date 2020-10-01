@@ -1,7 +1,6 @@
 ﻿using Fatec.LabEngSoftIII.Zhang.Api.Entidades;
-using System.Linq;
-using Fatec.LabEngSoftIII.Zhang.API.Utils;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Entradas;
+using System.Linq;
 
 namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 {
