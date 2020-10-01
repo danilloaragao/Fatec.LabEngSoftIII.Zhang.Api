@@ -29,6 +29,11 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             return this.Context.Skins.FirstOrDefault(s => s.Id == id);
         }
 
+        public List<Skin> PegarSkinsVip()
+        {
+            return this.Context.Skins.Where(s => s.IsVip).ToList();
+        }
+
         public List<Skin> PegarSkins()
         {
             return this.Context.Skins.ToList();

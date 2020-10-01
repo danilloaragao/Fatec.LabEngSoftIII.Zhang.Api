@@ -45,6 +45,11 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             return Context.Skins.Where(s => s.Id == id).FirstOrDefault();
         }
 
+        public Skin PegarSkinVipPeloId(int id)
+        {
+            return Context.Skins.Where(s => s.Id == id && s.IsVip).FirstOrDefault();
+        }
+
         public void AlteracaoSkins(List<ReqSkin> skins, int idUsuario)
         {
             foreach (ReqSkin skin in skins)
@@ -83,6 +88,19 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 
                 Context.UsuarioSkins.Add(usuarioSkin);
             }
+            Context.SaveChanges();
+        }
+
+        public void CompraSkin(int idSkin, int idUsuario)
+        {
+            UsuarioSkin usuarioSkin = new UsuarioSkin
+            {
+                IdSkin = idSkin,
+                IdUsuario = idUsuario,
+                Ativo = false
+            };
+            Context.UsuarioSkins.Add(usuarioSkin);
+            Context.Usuarios.FirstOrDefault(u => u.Id == idUsuario).Cash -= Context.Skins.FirstOrDefault(s => s.Id == idSkin).ValorCash;
             Context.SaveChanges();
         }
     }

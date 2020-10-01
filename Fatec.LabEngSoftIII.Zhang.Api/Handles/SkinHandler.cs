@@ -32,6 +32,11 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             return this.SkinBD.PegarSkin(id ?? 0);
         }
 
+        public List<Skin> PegarSkinsVip()
+        {
+            return this.SkinBD.PegarSkinsVip();
+        }
+
         public List<Skin> PegarSkins()
         {
             return this.SkinBD.PegarSkins();

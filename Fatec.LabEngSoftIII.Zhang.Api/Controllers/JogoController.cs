@@ -1,6 +1,7 @@
 ﻿using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Entradas;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas;
 using Fatec.LabEngSoftIII.Zhang.Api.Handles;
+using Fatec.LabEngSoftIII.Zhang.Api.Utils;
 using Fatec.LabEngSoftIII.Zhang.API.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -61,6 +62,35 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
                     return StatusCode(400 ,"Ocorreu uma falha no processamento. A palavra acertada não pode ser lida.");
 
                 return Ok(resposta);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
+            }
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RespUsuario))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [Route("CompraSkin")]
+        public ActionResult CompraSkin([FromBody] int idSkin, [FromHeader] string token)
+        {
+            try
+            {
+                if (!Token.Validar(token))
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
+
+                RespUsuario resposta = JogoHandler.CompraSkin(idSkin, Token.PegarId(token));
+
+                if (resposta == null)
+                    return StatusCode(400, "Ocorreu uma falha no processamento. Tente novamente mais tarde.");
+
+                return Ok(resposta);
+            }
+            catch(CashInsuficienteException ex)
+            {
+                return StatusCode(401, ex.Message);
             }
             catch (Exception ex)
             {
