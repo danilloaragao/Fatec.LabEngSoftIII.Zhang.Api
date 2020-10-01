@@ -116,5 +116,24 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
         {
             UsuarioBD.CompraCash(qtdCash, idUsuario);
         }
+
+        public List<RespSkinVip> SkinsVip(int idUsuario)
+        {
+            List<RespSkinVip> retorno = new List<RespSkinVip>();
+
+            List<Skin> skinsvip = JogoBD.PegarSkinsVip();
+
+            foreach (Skin skin in skinsvip)
+            {
+                RespSkinVip respSkinVip = new RespSkinVip();
+
+                respSkinVip.Descricao = skin.Descricao;
+                respSkinVip.Comprada = JogoBD.ExisteUsuarioSkin(skin.Id, idUsuario);
+
+                retorno.Add(respSkinVip);
+            }
+
+            return retorno;
+        }
     }
 }

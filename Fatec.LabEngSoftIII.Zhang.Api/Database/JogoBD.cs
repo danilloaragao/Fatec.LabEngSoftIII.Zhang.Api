@@ -118,5 +118,10 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
         {
             return Context.UsuarioSkins.Any(u => u.IdSkin == idSkin && u.IdUsuario == idUsuario);
         }
+
+        public List<Skin> PegarSkinsVip()
+        {
+            return Context.Skins.Where(s => s.IsVip).ToList();
+        }
     }
 }
