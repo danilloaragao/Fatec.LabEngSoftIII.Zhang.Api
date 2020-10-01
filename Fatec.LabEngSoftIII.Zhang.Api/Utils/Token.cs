@@ -18,12 +18,13 @@ namespace Fatec.LabEngSoftIII.Zhang.API.Utils
             this.Key = config.ChaveCriptografia;
         }
 
-        public string Gerar(string nome, int id)
+        public string Gerar(string nome, int id, bool isAdm)
         {
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.UniqueName, id.ToString()),
                 new Claim(JwtRegisteredClaimNames.NameId, nome),
+                new Claim("isadm", isAdm ? "1" : "0"),
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.Key));
@@ -50,8 +51,9 @@ namespace Fatec.LabEngSoftIII.Zhang.API.Utils
             Usuario usuario = new Usuario();
             string login = tokenLido.Claims.Where(e => e.Type.Equals("nameid")).FirstOrDefault().Value;
             int id = int.Parse(tokenLido.Claims.Where(e => e.Type.Equals("unique_name")).FirstOrDefault().Value);
+            bool isAdm = int.Parse(tokenLido.Claims.Where(e => e.Type.Equals("isadm")).FirstOrDefault().Value) == 1;
 
-            string novoToken = Gerar(login, id);
+            string novoToken = Gerar(login, id, isAdm);
 
             return tokenLimpo.Equals(novoToken);
         }
@@ -62,9 +64,8 @@ namespace Fatec.LabEngSoftIII.Zhang.API.Utils
                 return false;
 
             var tokenLido = new JwtSecurityTokenHandler().ReadJwtToken(token);
-            int id = int.Parse(tokenLido.Claims.Where(e => e.Type.Equals("unique_name")).FirstOrDefault().Value);
 
-            return id == 1;
+            return int.Parse(tokenLido.Claims.Where(e => e.Type.Equals("isadm")).FirstOrDefault().Value) == 1;
         }
 
         public int PegarId(string token)

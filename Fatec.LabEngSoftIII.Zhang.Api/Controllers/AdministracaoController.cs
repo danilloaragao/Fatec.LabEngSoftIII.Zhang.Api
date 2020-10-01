@@ -1,4 +1,6 @@
 ﻿using Fatec.LabEngSoftIII.Zhang.Api.Entidades;
+using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Entradas;
+using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas;
 using Fatec.LabEngSoftIII.Zhang.Api.Handles;
 using Fatec.LabEngSoftIII.Zhang.API.Utils;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +18,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         readonly private TemaHandler TemaHandler = new TemaHandler();
         readonly private ExperienciaHandler ExperienciaHandler = new ExperienciaHandler();
         readonly private SkinHandler SkinHandler = new SkinHandler();
+        readonly private SuperUsuarioHandler SuperUsuarioHandler = new SuperUsuarioHandler();
         readonly private Token Token = new Token();
 
         #region Palavras
@@ -600,6 +603,51 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
             {
                 return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
             }
+        }
+        #endregion
+
+        #region Administradores
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RespAdm))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [Route("LoginAdm")]
+        public ActionResult Login([FromBody] ReqCredenciais credenciais)
+        {
+            try
+            {
+                RespAdm resp = SuperUsuarioHandler.Login(credenciais);
+
+                if (resp == null)
+                    return StatusCode(401, "Usuário ou senha invalido");
+
+                return Ok(resp);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
+            }
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+        [Route("CadastroAdm")]
+        public ActionResult CadastroAdm([FromBody] ReqCadastro usuario, [FromHeader] string token)
+        {
+            try
+            {
+                if (!Token.ValidarAdm(token))
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
+
+
+                return Ok(this.SuperUsuarioHandler.Cadastro(usuario));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
+            }
+
         }
         #endregion
     }

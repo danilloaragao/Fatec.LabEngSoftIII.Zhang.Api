@@ -14,6 +14,11 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             return Context.Usuarios.FirstOrDefault(u => u.Login.Equals(login));
         }
 
+        public Usuario PegarAdmPeloLogin(string login)
+        {
+            return Context.Usuarios.FirstOrDefault(u => u.Login.Equals(login) && u.IsAdmin);
+        }
+
         public Usuario PegarUsuarioPeloEmail(string email)
         {
             return Context.Usuarios.FirstOrDefault(u => u.Email.Equals(email));

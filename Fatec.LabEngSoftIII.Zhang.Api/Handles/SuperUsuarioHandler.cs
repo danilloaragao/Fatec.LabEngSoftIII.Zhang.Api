@@ -8,21 +8,20 @@ using System.Linq;
 
 namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 {
-    public class UsuarioHandler
+    public class SuperUsuarioHandler
     {
         private readonly UsuarioBD UsuarioBD = new UsuarioBD();
-        private readonly JogoBD JogoBD = new JogoBD();
         private readonly Token Token = new Token();
         private readonly Criptografia Criptografia = new Criptografia();
 
-        public RespUsuario Login(ReqCredenciais credenciais)
+        public RespAdm Login(ReqCredenciais credenciais)
         {
-            Usuario usuarioBD = UsuarioBD.PegarUsuarioPeloLogin(credenciais.Login);
+            Usuario usuarioBD = UsuarioBD.PegarAdmPeloLogin(credenciais.Login);
 
             if (usuarioBD == null || !credenciais.Senha.Equals(Criptografia.Decriptografar(usuarioBD.Senha)))
                 return null;
 
-            return MontarRespUsuario(usuarioBD);
+            return MontarRespAdm(usuarioBD);
         }
         
         public string Cadastro(ReqCadastro usuario)
@@ -75,76 +74,24 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
                 Experiencia = 0,
                 Login = usuario.Login,
                 Senha = usuario.Senha,
-                IsAdmin = false
+                IsAdmin = true
             };
 
             return this.UsuarioBD.CadastrarUsuario(usuarioCadastro);
         }
 
-        public RespUsuario MontarRespUsuario(Usuario usuarioBD)
+        public RespAdm MontarRespAdm(Usuario usuarioBD)
         {
-            RespUsuario usuario = new RespUsuario
+            RespAdm usuario = new RespAdm
             {
                 Id = usuarioBD.Id,
                 Login = usuarioBD.Login,
-                Email = usuarioBD.Email,
-                Experiencia = usuarioBD.Experiencia
+                Email = usuarioBD.Email
             };
 
-            List<Experiencia> experiencia = JogoBD.PegarExperiencias();
-
-            List<Experiencia> niveisAbaixo = experiencia.Where(e => e.Valor < usuario.Experiencia).ToList();
-
-            if (niveisAbaixo == null || niveisAbaixo.Count == 0)
-                usuario.Nivel = 0;
-            else
-                usuario.Nivel = niveisAbaixo.Max(e => e.Nivel);
-
-            List<Experiencia> niveisAcima = experiencia.Where(e => e.Valor > usuario.Experiencia).ToList();
-
-            if (niveisAcima == null || niveisAcima.Count == 0)
-                usuario.ExperienciaProximoNivel = 0;
-            else
-                usuario.ExperienciaProximoNivel = niveisAcima.Min(e => e.Valor) - usuario.Experiencia;
-
-            usuario.Skins = JogoBD.PegarSkinsUsuario(usuario.Id) ?? new List<RespSkin>();
             usuario.Token = Token.Gerar(usuario.Login, usuario.Id, usuarioBD.IsAdmin);
 
             return usuario;
-        }
-
-        public string AtualizarUsuario(ReqAtualizacaoUsuario usuario)
-        {
-            if (usuario == null)
-                return "Falha ao receber as informações do usuario";
-
-            List<string> inconsistencias = new List<string>();
-
-            if (string.IsNullOrWhiteSpace(usuario.Senha))
-                inconsistencias.Add("Senha não pode estar em branco");
-            else
-            {
-                if (usuario.Senha.Length < 6)
-                    inconsistencias.Add("Senha deve ter no mínimo 6 caracteres");
-            }
-
-            if (string.IsNullOrWhiteSpace(usuario.Email))
-                inconsistencias.Add("Email não pode estar em branco");
-            else
-            {
-                if (!usuario.Email.Contains("@"))
-                    inconsistencias.Add("Email inválido");
-            }
-
-            if (inconsistencias.Count > 0)
-                return string.Join(" - ", inconsistencias);
-
-            usuario.Senha = Criptografia.Criptografar(usuario.Senha);
-
-            UsuarioBD.AtualizarUsuario(usuario);
-
-            return "Dados atualizados com sucesso";
-
         }
     }
 }

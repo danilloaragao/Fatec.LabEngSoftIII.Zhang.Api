@@ -91,7 +91,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             Context.SaveChanges();
         }
 
-        public void CompraSkin(int idSkin, int idUsuario)
+        public void ComprarSkin(int idSkin, int idUsuario)
         {
             UsuarioSkin usuarioSkin = new UsuarioSkin
             {
