@@ -1,6 +1,7 @@
 ﻿using Fatec.LabEngSoftIII.Zhang.Api.Entidades;
 using System.Linq;
 using Fatec.LabEngSoftIII.Zhang.API.Utils;
+using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Entradas;
 
 namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 {
@@ -32,7 +33,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
           return "Cadastro efetuado com sucesso";  
         }
 
-        public void AtualizarUsuario(Usuario usuario)
+        public void AtualizarUsuario(ReqAtualizacaoUsuario usuario)
         {
             Usuario usuarioBD = Context.Usuarios.FirstOrDefault(u => u.Id == usuario.Id);
             usuarioBD.Senha = usuario.Senha;

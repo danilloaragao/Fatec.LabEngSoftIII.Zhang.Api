@@ -1,5 +1,4 @@
-﻿using Fatec.LabEngSoftIII.Zhang.Api.Entidades;
-using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Entradas;
+﻿using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Entradas;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas;
 using Fatec.LabEngSoftIII.Zhang.Api.Handles;
 using Fatec.LabEngSoftIII.Zhang.API.Utils;
@@ -20,7 +19,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [Route("Cadastro")]
-        public ActionResult Cadastro([FromBody] Usuario usuario)
+        public ActionResult Cadastro([FromBody] ReqCadastro usuario)
         {
             try
             {
@@ -69,7 +68,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [Route("AlterarDados")]
-        public ActionResult AlterarDados([FromBody] Usuario usuario, [FromHeader] string token)
+        public ActionResult AlterarDados([FromBody] ReqAtualizacaoUsuario usuario, [FromHeader] string token)
         {
             try
             {

@@ -25,7 +25,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             return MontarRespUsuario(usuarioBD);
         }
         
-        public string Cadastro(Usuario usuario)
+        public string Cadastro(ReqCadastro usuario)
         { 
             if (usuario == null)
                 return "Falha ao receber as informações do usuario";
@@ -69,7 +69,15 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 
             usuario.Senha = Criptografia.Criptografar(usuario.Senha);
 
-            return this.UsuarioBD.CadastrarUsuario(usuario);
+            Usuario usuarioCadastro = new Usuario()
+            {
+                Email = usuario.Email,
+                Experiencia = 0,
+                Login = usuario.Login,
+                Senha = usuario.Senha
+            };
+
+            return this.UsuarioBD.CadastrarUsuario(usuarioCadastro);
         }
 
         public RespUsuario MontarRespUsuario(Usuario usuarioBD)
@@ -104,7 +112,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             return usuario;
         }
 
-        public string AtualizarUsuario(Usuario usuario)
+        public string AtualizarUsuario(ReqAtualizacaoUsuario usuario)
         {
             if (usuario == null)
                 return "Falha ao receber as informações do usuario";
