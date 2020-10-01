@@ -46,6 +46,12 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 
                 entity.Property(e => e.Experiencia)
                     .HasColumnName("EXPERIENCIA");
+
+                entity.Property(e => e.IsAdmin)
+                    .HasColumnName("IS_ADMIN");
+
+                entity.Property(e => e.Cash)
+                    .HasColumnName("CASH");
             });
 
             modelBuilder.Entity<UsuarioSkin>(entity =>
@@ -83,6 +89,12 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 
                 entity.Property(e => e.Nivel)
                     .HasColumnName("NIVEL");
+
+                entity.Property(e => e.IsVip)
+                    .HasColumnName("IS_VIP");
+
+                entity.Property(e => e.ValorCash)
+                    .HasColumnName("VALOR_CASH");
             });
 
             modelBuilder.Entity<Experiencia>(entity =>
