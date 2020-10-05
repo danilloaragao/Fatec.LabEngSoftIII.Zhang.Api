@@ -31,6 +31,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api
                     });
             });
             services.AddCors();
+
             //    c => c.AddPolicy("policy",
             //    builder =>
             //    {
@@ -64,7 +65,11 @@ namespace Fatec.LabEngSoftIII.Zhang.Api
             });
 
             app.UseAuthentication();
-            app.UseCors(b => b.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+            string[] origins = new string[] { "https://zhang-bd.herokuapp.com", "http://zhang-bd.herokuapp.com", "https://localhost:4200", "http://localhost:4200" };
+            app.UseCors(b => b.AllowAnyMethod().AllowAnyHeader().WithOrigins(origins));
+
+
+
 
             //app.UseCors(option => option.AllowAnyOrigin()
             //                            .AllowAnyMethod()
