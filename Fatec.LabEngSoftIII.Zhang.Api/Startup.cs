@@ -30,14 +30,14 @@ namespace Fatec.LabEngSoftIII.Zhang.Api
                         Description = "API Desenvolvida para o Jogo da Forca Zhang.<br>Trabalho para a matéria de Engenharia de Software III do curso de ADS (noite) da FATEC-SP<br><br>Integrantes:<br>Allan Prado de Oliveira Moura<br>Augusto Albuquerque Reis<br>Bruna Ramos<br>Danillo Felipe Aragão<br>Danilo Tupinambá Polizeli<br>Gabriel Alves da Silva<br>Gustavo Rocha da Silva<br>Shayanne Crispim de Medeiros Amorim<br>Tatiana Rodrigues de Oliveira",
                     });
             });
-            services.AddCors(
-                c => c.AddPolicy("policy",
-                builder => {
-                    builder.WithOrigins("https://zhang-bd.herokuapp.com", "http://localhost:4200")
-                           .AllowAnyMethod()
-                           .AllowAnyHeader()
-                           .AllowCredentials();
-                }));
+            //services.AddCors(
+            //    c => c.AddPolicy("policy",
+            //    builder => {
+            //        builder.WithOrigins("https://zhang-bd.herokuapp.com", "http://localhost:4200")
+            //               .WithHeaders()
+            //               .AllowAnyHeader()
+            //               .AllowCredentials();
+            //    }));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -62,7 +62,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api
                 c.RoutePrefix = string.Empty;
             });
 
-            app.UseCors();
+            app.UseCors(option => option.AllowAnyOrigin());
         }
     }
 }
