@@ -3,6 +3,7 @@ using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas;
 using Fatec.LabEngSoftIII.Zhang.Api.Handles;
 using Fatec.LabEngSoftIII.Zhang.Api.Utils;
 using Fatec.LabEngSoftIII.Zhang.API.Utils;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,6 +20,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         private readonly Token Token = new Token();
 
         [HttpGet]
+        [DisableCors]
         [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(RespPalavraJogo))]
         [Route("Palavra")]
         public ActionResult PegarPalavra([FromQuery] string tema)
