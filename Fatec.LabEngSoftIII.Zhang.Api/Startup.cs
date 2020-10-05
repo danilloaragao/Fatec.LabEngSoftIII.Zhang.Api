@@ -18,6 +18,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSwaggerGen(c =>
             {
@@ -30,7 +31,6 @@ namespace Fatec.LabEngSoftIII.Zhang.Api
                         Description = "API Desenvolvida para o Jogo da Forca Zhang.<br>Trabalho para a matéria de Engenharia de Software III do curso de ADS (noite) da FATEC-SP<br><br>Integrantes:<br>Allan Prado de Oliveira Moura<br>Augusto Albuquerque Reis<br>Bruna Ramos<br>Danillo Felipe Aragão<br>Danilo Tupinambá Polizeli<br>Gabriel Alves da Silva<br>Gustavo Rocha da Silva<br>Shayanne Crispim de Medeiros Amorim<br>Tatiana Rodrigues de Oliveira",
                     });
             });
-            services.AddCors();
 
             //    c => c.AddPolicy("policy",
             //    builder =>
@@ -54,7 +54,6 @@ namespace Fatec.LabEngSoftIII.Zhang.Api
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
 
             app.UseSwagger();
 
@@ -65,16 +64,17 @@ namespace Fatec.LabEngSoftIII.Zhang.Api
             });
 
             app.UseAuthentication();
-            string[] origins = new string[] { "https://zhang-bd.herokuapp.com", "http://zhang-bd.herokuapp.com", "https://localhost:4200", "http://localhost:4200" };
-            app.UseCors(b => b.AllowAnyMethod().AllowAnyHeader().WithOrigins(origins));
+            //string[] origins = new string[] { "https://zhang-bd.herokuapp.com", "http://zhang-bd.herokuapp.com", "https://localhost:4200", "http://localhost:4200" };
+            //app.UseCors(b => b.AllowAnyMethod().AllowAnyHeader().WithOrigins(origins).AllowCredentials());
 
 
 
 
-            //app.UseCors(option => option.AllowAnyOrigin()
-            //                            .AllowAnyMethod()
-            //                            .AllowAnyHeader()
-            //                            .AllowCredentials());
+            app.UseCors(option => option.AllowAnyOrigin()
+                                        .AllowAnyMethod()
+                                        .AllowAnyHeader()
+                                        .AllowCredentials());
+            app.UseMvc();
         }
     }
 }
