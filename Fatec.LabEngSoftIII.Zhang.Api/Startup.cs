@@ -33,7 +33,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api
             services.AddCors(
                 c => c.AddPolicy("policy",
                 builder => {
-                    builder.AllowAnyOrigin()
+                    builder.WithOrigins("https://zhang-bd.herokuapp.com", "http://localhost:4200")
                            .AllowAnyMethod()
                            .AllowAnyHeader()
                            .AllowCredentials();
