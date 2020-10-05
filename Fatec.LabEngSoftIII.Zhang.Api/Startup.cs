@@ -62,7 +62,10 @@ namespace Fatec.LabEngSoftIII.Zhang.Api
                 c.RoutePrefix = string.Empty;
             });
 
-            app.UseCors(option => option.AllowAnyOrigin());
+            app.UseCors(option => option.AllowAnyOrigin()
+                                        .AllowAnyMethod()
+                                        .AllowAnyHeader()
+                                        .AllowCredentials());
         }
     }
 }
