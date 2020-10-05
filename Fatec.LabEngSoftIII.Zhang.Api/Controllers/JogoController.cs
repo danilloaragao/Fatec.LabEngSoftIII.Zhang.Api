@@ -20,7 +20,6 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         private readonly Token Token = new Token();
 
         [HttpGet]
-        [DisableCors]
         [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(RespPalavraJogo))]
         [Route("Palavra")]
         public ActionResult PegarPalavra([FromQuery] string tema)
