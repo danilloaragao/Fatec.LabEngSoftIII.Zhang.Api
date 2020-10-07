@@ -18,9 +18,9 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Utils
              .Build();
 
             this.ConnetionString = configuration["ConnectionString"];
-            this.Email = configuration["ChaveCriptografia"];
-            this.SenhaEmail = configuration["Email"];
-            this.ChaveCriptografia = configuration["Senha"];
+            this.Email = configuration["Email"];
+            this.SenhaEmail = configuration["Senha"];
+            this.ChaveCriptografia = configuration["ChaveCriptografia"];
         }
     }
 }

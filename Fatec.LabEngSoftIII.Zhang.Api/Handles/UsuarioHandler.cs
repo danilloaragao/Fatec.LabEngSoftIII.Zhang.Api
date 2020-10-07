@@ -14,7 +14,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
         private readonly JogoBD JogoBD = new JogoBD();
         private readonly Token Token = new Token();
         private readonly Criptografia Criptografia = new Criptografia();
-
+        private readonly Email Email = new Email();
         public RespUsuario Login(ReqCredenciais credenciais)
         {
             Usuario usuarioBD = UsuarioBD.PegarUsuarioPeloLogin(credenciais.Login);
@@ -145,6 +145,34 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 
             return "Dados atualizados com sucesso";
 
+        }
+        public string LembrarSenha(string Email)
+        {
+            Usuario usuario = UsuarioBD.LembrarSenha(Email);
+            if (usuario == null)
+                return ("Login ou Email não encontrado na base de dados");
+
+            string assunto = "Recuperação da Senha";
+
+            string corpo = $@"
+            <html>
+            Olá, <b>{usuario.Login}!
+            <br>
+            <br>
+            Suas credenciais para acesso ao jogo da forca Z-Hung são as seguintes:
+            <br>
+            <br>
+            Login: <b>{usuario.Login}</b><br>
+            Senha: <b>{this.Criptografia.Decriptografar(usuario.Senha)}</b>
+            <br>
+            <br>
+            <br>
+            <br>
+            <i>Este email é enviado de forma automática. Favor não responder.</i>
+            </html>";
+
+            this.Email.EnviarEmail(usuario.Email, assunto, corpo);
+            return "Sua senha foi encaminhada para o e-mail cadastrado.";
         }
     }
 }

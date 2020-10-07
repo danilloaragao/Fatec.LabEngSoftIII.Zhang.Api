@@ -53,5 +53,12 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 
             Context.SaveChanges();
         }
+
+        public Usuario LembrarSenha(string Email)
+        {
+            Usuario usuario = this.Context.Usuarios.FirstOrDefault(u => u.Login.Equals(Email) || u.Email.Equals(Email));
+            return usuario;
+        }
+
     }
 }

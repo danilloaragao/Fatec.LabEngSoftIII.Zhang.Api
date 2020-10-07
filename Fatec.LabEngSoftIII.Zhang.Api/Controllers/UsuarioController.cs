@@ -37,7 +37,14 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [Route("RecuperacaoSenha")]
         public ActionResult RecuperacaoSenha([FromBody] string LoginEmail)
         {
-            return Ok("Sua senha foi enviada para o e-mail cadastrado");
+            try
+            {
+                return StatusCode(200, UsuarioHandler.LembrarSenha(LoginEmail));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
+            }
         }
 
         [HttpPost]
