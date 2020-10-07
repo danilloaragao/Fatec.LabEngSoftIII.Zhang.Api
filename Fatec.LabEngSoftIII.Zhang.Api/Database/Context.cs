@@ -87,6 +87,27 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
                 entity.Property(e => e.Descricao)
                     .HasColumnName("DESCRICAO");
 
+                entity.Property(e => e.BracoDireito)
+                    .HasColumnName("BRACO_DIREITO");
+
+                entity.Property(e => e.BracoEsquerdo)
+                    .HasColumnName("BRACO_ESQUERDO");
+
+                entity.Property(e => e.PernaDireita)
+                    .HasColumnName("PERNA_DIREITA");
+
+                entity.Property(e => e.PernaEsquerda)
+                    .HasColumnName("PERNA_ESQUERDA");
+
+                entity.Property(e => e.Corpo)
+                    .HasColumnName("CORPO");
+
+                entity.Property(e => e.Cabeca)
+                    .HasColumnName("CABECA");
+
+                entity.Property(e => e.CabecaDesperta)
+                    .HasColumnName("CABECA_DESPERTA");
+
                 entity.Property(e => e.Nivel)
                     .HasColumnName("NIVEL");
 
