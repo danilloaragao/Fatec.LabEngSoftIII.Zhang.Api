@@ -159,7 +159,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             Olá, <b>{usuario.Login}!
             <br>
             <br>
-            Suas credenciais para acesso ao jogo da forca Z-Hung são as seguintes:
+            Suas credenciais para acesso ao jogo da forca Z-Hang são as seguintes:
             <br>
             <br>
             Login: <b>{usuario.Login}</b><br>

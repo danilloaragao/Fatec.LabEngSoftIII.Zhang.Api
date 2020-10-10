@@ -2,10 +2,9 @@
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Entradas;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas;
+using Fatec.LabEngSoftIII.Zhang.Api.Utils;
 using Fatec.LabEngSoftIII.Zhang.API.Utils;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 {
@@ -25,9 +24,9 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 
             return MontarRespAdm(usuarioBD);
         }
-        
+
         public string Cadastro(ReqCadastroAdm usuario)
-        { 
+        {
             if (usuario == null)
                 return "Falha ao receber as informações do usuario";
 
@@ -39,10 +38,11 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             {
                 if (usuario.Login.Length < 4)
                     inconsistencias.Add("Login deve ter no mínimo 4 caracteres");
-                else{
+                else
+                {
                     if (this.UsuarioBD.PegarUsuarioPeloLogin(usuario.Login) != null)
                         inconsistencias.Add("Este login já está em uso");
-                }                
+                }
             }
 
             if (string.IsNullOrWhiteSpace(usuario.Email))
@@ -51,23 +51,22 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             {
                 if (!usuario.Email.Contains("@"))
                     inconsistencias.Add("Email inválido");
-                else{
+                else
+                {
                     if (this.UsuarioBD.PegarUsuarioPeloEmail(usuario.Email) != null)
                         inconsistencias.Add("Email já foi cadastrado");
-                }                          
+                }
             }
-            
+
             if (inconsistencias.Count > 0)
                 return string.Join(" - ", inconsistencias);
-
-            string senha = new Guid().ToString().Substring(6);
 
             Usuario usuarioCadastro = new Usuario()
             {
                 Email = usuario.Email,
                 Experiencia = 0,
                 Login = usuario.Login,
-                Senha = Criptografia.Criptografar(senha),
+                Senha = Criptografia.Criptografar(Gerador.Palavra(8)),
                 IsAdmin = true
             };
 
