@@ -172,8 +172,8 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [Route("Palavra")]
-        public ActionResult DeletaPalavra([FromBody] int? idPalavra, [FromHeader] string token)
+        [Route("Palavra/{idPalavra}")]
+        public ActionResult DeletaPalavra(int idPalavra, [FromHeader] string token)
         {
             try
             {
@@ -312,8 +312,8 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [Route("Tema")]
-        public ActionResult DeletaTema([FromBody] int? idTema, [FromHeader] string token)
+        [Route("Tema/{idTema}")]
+        public ActionResult DeletaTema(int idTema, [FromHeader] string token)
         {
             try
             {
@@ -403,8 +403,8 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [Route("Experiencia")]
-        public ActionResult DeletaExperiencia([FromBody] int? idExperiencia, [FromHeader] string token)
+        [Route("Experiencia/{idExperiencia}")]
+        public ActionResult DeletaExperiencia(int idExperiencia, [FromHeader] string token)
         {
             try
             {
@@ -588,8 +588,8 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [Route("Skin")]
-        public ActionResult DeletaSkin([FromBody] int? idSkin, [FromHeader] string token)
+        [Route("Skin/{idSkin}")]
+        public ActionResult DeletaSkin(int idSkin, [FromHeader] string token)
         {
             try
             {
