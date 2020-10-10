@@ -26,7 +26,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             return MontarRespAdm(usuarioBD);
         }
         
-        public string Cadastro(ReqCadastro usuario)
+        public string Cadastro(ReqCadastroAdm usuario)
         { 
             if (usuario == null)
                 return "Falha ao receber as informações do usuario";

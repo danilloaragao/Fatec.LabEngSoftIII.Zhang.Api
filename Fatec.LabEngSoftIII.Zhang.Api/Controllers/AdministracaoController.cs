@@ -633,7 +633,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [Route("CadastroAdm")]
-        public ActionResult CadastroAdm([FromBody] ReqCadastro usuario, [FromHeader] string token)
+        public ActionResult CadastroAdm([FromBody] ReqCadastroAdm usuario, [FromHeader] string token)
         {
             try
             {
