@@ -3,6 +3,7 @@ using Fatec.LabEngSoftIII.Zhang.Api.Entidades;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Entradas;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas;
 using Fatec.LabEngSoftIII.Zhang.API.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,6 +12,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
     public class SuperUsuarioHandler
     {
         private readonly UsuarioBD UsuarioBD = new UsuarioBD();
+        private readonly UsuarioHandler UsuarioHandler = new UsuarioHandler();
         private readonly Token Token = new Token();
         private readonly Criptografia Criptografia = new Criptografia();
 
@@ -43,14 +45,6 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
                 }                
             }
 
-            if (string.IsNullOrWhiteSpace(usuario.Senha))
-                inconsistencias.Add("Senha não pode estar em branco");
-            else
-            {
-                if (usuario.Senha.Length < 6)
-                    inconsistencias.Add("Senha deve ter no mínimo 6 caracteres");                
-            }
-
             if (string.IsNullOrWhiteSpace(usuario.Email))
                 inconsistencias.Add("Email não pode estar em branco");
             else
@@ -66,18 +60,22 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             if (inconsistencias.Count > 0)
                 return string.Join(" - ", inconsistencias);
 
-            usuario.Senha = Criptografia.Criptografar(usuario.Senha);
+            string senha = new Guid().ToString().Substring(6);
 
             Usuario usuarioCadastro = new Usuario()
             {
                 Email = usuario.Email,
                 Experiencia = 0,
                 Login = usuario.Login,
-                Senha = usuario.Senha,
+                Senha = Criptografia.Criptografar(senha),
                 IsAdmin = true
             };
 
-            return this.UsuarioBD.CadastrarUsuario(usuarioCadastro);
+            string retorno = this.UsuarioBD.CadastrarUsuario(usuarioCadastro);
+
+            UsuarioHandler.LembrarSenha(usuarioCadastro.Email);
+
+            return retorno;
         }
 
         public RespAdm MontarRespAdm(Usuario usuarioBD)
