@@ -65,7 +65,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 
             this.Context.Palavras.Remove(palavraJogo);
             this.Context.SaveChanges();
-            return "Palava deletada com sucesso.";
+            return "palavra deletada com sucesso.";
         }
     }
 }
