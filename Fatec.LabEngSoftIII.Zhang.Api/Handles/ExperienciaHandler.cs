@@ -33,13 +33,12 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             if (experienciasBd.Any(e => e.Valor == experiencia.Valor))
                 return "Valor de experiencia já atribuído a um nível";
 
-            List<Experiencia> experienciasNivelAcima = experienciasBd.Where(e => e.Nivel > experiencia.Nivel).ToList();
-            List<Experiencia> experienciasNivelAbaixo = experienciasBd.Where(e => e.Nivel < experiencia.Nivel).ToList();
+            List<Experiencia> experienciasNivelAcima = experienciasBd.Where(e => e.Nivel > experiencia.Nivel).OrderBy(e => e.Nivel).ToList();
+            List<Experiencia> experienciasNivelAbaixo = experienciasBd.Where(e => e.Nivel < experiencia.Nivel).OrderByDescending(e => e.Nivel).ToList();
 
-            if (experienciasNivelAcima != null && experienciasNivelAcima.Count > 0 && experienciasNivelAcima.Min().Valor < experiencia.Valor)
+            if (experienciasNivelAcima != null && experienciasNivelAcima.Count > 0 && experienciasNivelAcima.FirstOrDefault().Valor < experiencia.Valor)
                 return "O valor da experiência de um nível não pode ser maior que a experiência de níveis acima";
-
-            if (experienciasNivelAbaixo != null && experienciasNivelAbaixo.Count > 0 && experienciasNivelAbaixo.Max().Valor > experiencia.Valor)
+            if (experienciasNivelAbaixo != null && experienciasNivelAbaixo.Count > 0 && experienciasNivelAbaixo.FirstOrDefault().Valor > experiencia.Valor)
                 return "O valor da experiência de um nível não pode ser menor que a experiência de níveis abaixo";
 
             return this.ExperienciaBD.InsereExperiencia(experiencia);
