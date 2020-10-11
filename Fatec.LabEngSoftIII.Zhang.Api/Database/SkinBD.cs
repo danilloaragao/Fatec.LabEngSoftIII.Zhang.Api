@@ -55,7 +55,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 
             this.Context.SaveChanges();
 
-            return "Tema atualizado com sucesso";
+            return "Skin atualizada com sucesso";
         }
 
         public string DeletaSkin(int? idSkin)
@@ -64,7 +64,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 
             this.Context.Skins.Remove(skinBd);
             this.Context.SaveChanges();
-            return "Tema deletado com sucesso.";
+            return "Skin deletada com sucesso.";
         }
     }
 }
