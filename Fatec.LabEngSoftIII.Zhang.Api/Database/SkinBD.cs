@@ -52,6 +52,15 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 
             skinBd.Descricao = skin.Descricao;
             skinBd.Nivel = skin.Nivel;
+            skinBd.CabecaDesperta = skin.CabecaDesperta;
+            skinBd.Cabeca = skin.Cabeca;
+            skinBd.BracoEsquerdo = skin.BracoEsquerdo;
+            skinBd.Corpo = skin.Corpo;
+            skinBd.BracoDireito = skin.BracoDireito;
+            skinBd.PernaDireita = skin.PernaDireita;
+            skinBd.PernaEsquerda = skin.PernaEsquerda;
+            skinBd.IsVip = skin.IsVip;
+            skinBd.ValorCash = skin.ValorCash;
 
             this.Context.SaveChanges();
 
