@@ -67,5 +67,13 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             this.Context.SaveChanges();
             return "Palavra deletada com sucesso.";
         }
+        public string DeletaPalavraPorTema(int idTema)
+        {
+            List<PalavraJogo> palavras = this.Context.Palavras.Where(p => p.IdTema == idTema).ToList();
+
+            this.Context.Palavras.RemoveRange(palavras);
+            this.Context.SaveChanges();
+            return "Palavra deletada com sucesso.";
+        }
     }
 }

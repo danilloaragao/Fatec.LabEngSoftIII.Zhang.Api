@@ -8,6 +8,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
     public class TemaHandler
     {
         readonly private TemaBD TemaBD = new TemaBD();
+        readonly private PalavraBD PalavraBD = new PalavraBD();
 
         public Tema PegarTema(int? id)
         {
@@ -72,6 +73,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             if (temaBd == null)
                 return "Id não encontrado no banco de dados";
 
+            this.PalavraBD.DeletaPalavraPorTema(idTema ?? 0);
             return this.TemaBD.DeletaTema(idTema ?? 0);
         }
     }
