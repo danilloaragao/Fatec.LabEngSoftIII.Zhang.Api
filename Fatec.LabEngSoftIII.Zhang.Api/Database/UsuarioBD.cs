@@ -41,7 +41,6 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
         {
             Usuario usuarioBD = Context.Usuarios.FirstOrDefault(u => u.Id == usuario.Id);
             usuarioBD.Senha = usuario.Senha;
-            usuarioBD.Email = usuario.Email;
 
             Context.SaveChanges();
         }

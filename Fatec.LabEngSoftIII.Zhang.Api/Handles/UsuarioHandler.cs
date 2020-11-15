@@ -128,14 +128,6 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
                     inconsistencias.Add("Senha deve ter no mínimo 6 caracteres");
             }
 
-            if (string.IsNullOrWhiteSpace(usuario.Email))
-                inconsistencias.Add("Email não pode estar em branco");
-            else
-            {
-                if (!usuario.Email.Contains("@"))
-                    inconsistencias.Add("Email inválido");
-            }
-
             if (inconsistencias.Count > 0)
                 return string.Join(" - ", inconsistencias);
 
