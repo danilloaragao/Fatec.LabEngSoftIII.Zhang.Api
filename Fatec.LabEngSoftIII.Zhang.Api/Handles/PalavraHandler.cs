@@ -8,13 +8,6 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
     public class PalavraHandler
     {
         readonly private PalavraBD PalavraBD = new PalavraBD();
-        public List<PalavraJogo> PegarPalavrasPorTema(string tema)
-        {
-            if (string.IsNullOrWhiteSpace(tema))
-                return null;
-
-            return this.PalavraBD.PegarPalavrasPorTema(tema);
-        }
 
         public PalavraJogo PegarPalavra(int? id)
         {

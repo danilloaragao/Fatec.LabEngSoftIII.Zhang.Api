@@ -123,5 +123,17 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
         {
             return Context.Skins.Where(s => s.IsVip).ToList();
         }
+
+        public List<PalavraJogo> ObterPalavras(string tema)
+        {
+            if (string.IsNullOrWhiteSpace(tema))
+                return this.Context.Palavras.ToList();
+            else
+            {
+                return this.Context.Palavras.Where(p => 
+                                            p.IdTema == this.Context.Temas.FirstOrDefault(t => t.Descricao.ToUpper().Equals(tema.ToUpper())).Id
+                                            ).ToList();
+            }
+        }
     }
 }

@@ -3,12 +3,10 @@ using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas;
 using Fatec.LabEngSoftIII.Zhang.Api.Handles;
 using Fatec.LabEngSoftIII.Zhang.Api.Utils;
 using Fatec.LabEngSoftIII.Zhang.API.Utils;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
 {
@@ -21,28 +19,29 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(RespPalavraJogo))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type= typeof(string))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type= typeof(string))]
         [Route("Palavra")]
-        public ActionResult PegarPalavra([FromQuery] string tema)
+        public ActionResult PegarPalavra([FromQuery] string tema, [FromHeader] string token)
         {
-
-            return Ok(new RespPalavraJogo()
+            try
             {
-                Id = 1,
-                Palavra = "Mock",
-                Dica1 = "Dica 1",
-                Dica2 = "Dica 2",
-                Letras = new List<string>()
-                {
-                    "M",
-                    "O",
-                    "C",
-                    "K",
-                    "A",
-                    "S",
-                    "D",
-                    "F"
-                }.OrderBy(l => l).ToList()
-            });
+                int idUsuario = 0;
+
+                if (!string.IsNullOrWhiteSpace(token) && Token.Validar(token))
+                    idUsuario = Token.PegarId(token);
+
+                    RespPalavraJogo resposta = JogoHandler.ObterPalavra(tema, idUsuario);
+
+                if (resposta == null)
+                    return StatusCode(400, "Ocorreu uma falha no processamento. Tente novamente dentro de instantes.");
+
+                return Ok(resposta);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
+            }
         }
 
         [HttpPost]

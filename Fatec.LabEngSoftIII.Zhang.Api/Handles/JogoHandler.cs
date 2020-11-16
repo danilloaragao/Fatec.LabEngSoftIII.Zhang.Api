@@ -3,6 +3,7 @@ using Fatec.LabEngSoftIII.Zhang.Api.Entidades;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Entradas;
 using Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas;
 using Fatec.LabEngSoftIII.Zhang.Api.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,7 +13,6 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
     {
         private readonly JogoBD JogoBD = new JogoBD();
         private readonly UsuarioBD UsuarioBD = new UsuarioBD();
-        private readonly UsuarioHandler UsuarioHandler = new UsuarioHandler();
 
         public string AlteracaoSkins(List<ReqSkin> skins, int idUsuario)
         {
@@ -29,18 +29,18 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 
             int experienciaGanha = (qtdLetras * 5) - (acerto.Erros * 2) - (acerto.DicasUsadas * 3);
 
-            int nivelAntigoUsuario = UsuarioHandler.MontarRespUsuario(UsuarioBD.PegarUsuarioPeloId(idUsuario)).Nivel;
+            int nivelAntigoUsuario = RespUsuario.MontarRespUsuario(UsuarioBD.PegarUsuarioPeloId(idUsuario)).Nivel;
 
             JogoBD.AcertoPalavra(experienciaGanha, idUsuario);
 
-            RespUsuario usuario = UsuarioHandler.MontarRespUsuario(UsuarioBD.PegarUsuarioPeloId(idUsuario));
+            RespUsuario usuario = RespUsuario.MontarRespUsuario(UsuarioBD.PegarUsuarioPeloId(idUsuario));
 
             if (usuario.Nivel == nivelAntigoUsuario)
                 return usuario;
 
             JogoBD.AtualizarSkins(usuario);
 
-            return UsuarioHandler.MontarRespUsuario(UsuarioBD.PegarUsuarioPeloId(idUsuario));
+            return RespUsuario.MontarRespUsuario(UsuarioBD.PegarUsuarioPeloId(idUsuario));
         }
 
         public RespUsuario CompraSkin(int idSkin, int idUsuario)
@@ -61,7 +61,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 
             JogoBD.ComprarSkin(idSkin, idUsuario);
 
-            return UsuarioHandler.MontarRespUsuario(UsuarioBD.PegarUsuarioPeloId(idUsuario));
+            return RespUsuario.MontarRespUsuario(UsuarioBD.PegarUsuarioPeloId(idUsuario));
         }
 
         public List<RespRanking> Ranking(int idUsuario)
@@ -135,6 +135,29 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             }
 
             return retorno;
+        }
+
+        public RespPalavraJogo ObterPalavra(string tema, int idUsuario)
+        {
+            List<PalavraJogo> palavras = this.JogoBD.ObterPalavras(tema);
+
+            if (palavras == null || palavras.Count == 0)
+                throw new Exception("Não foram encontradas palavras no banco de dados");
+
+            Random random = new Random();
+            int indexPalavra = random.Next(palavras.Count);
+            int quantidadeLetras = 7;
+
+            if (idUsuario != 0)
+            {
+                Usuario usuario = this.UsuarioBD.PegarUsuarioPeloId(idUsuario);
+                RespUsuario usuarioCompleto = RespUsuario.MontarRespUsuario(usuario);
+                quantidadeLetras += usuarioCompleto.Nivel;
+            }
+
+            PalavraJogo palavraSorteada = palavras[indexPalavra];
+
+            return RespPalavraJogo.MontarResposta(palavraSorteada, quantidadeLetras);
         }
     }
 }

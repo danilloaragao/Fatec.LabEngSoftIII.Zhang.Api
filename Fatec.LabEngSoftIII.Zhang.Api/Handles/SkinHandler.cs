@@ -16,14 +16,6 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             return this.SkinBD.PegarSkinsPorDescricao(descricaoSkin);
         }
 
-        public List<Skin> PegarSkinsPorNivel(int? nivel)
-        {
-            if (nivel == null)
-                return null;
-
-            return this.SkinBD.PegarSkinsPorNivel(nivel ?? 0);
-        }
-
         public Skin PegarSkin(int? id)
         {
             if (id == null)
@@ -31,11 +23,6 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 
             return this.SkinBD.PegarSkin(id ?? 0);
         }
-
-        //public List<Skin> PegarSkinsVip()
-        //{
-        //    return this.SkinBD.PegarSkinsVip();
-        //}
 
         public List<Skin> PegarSkins()
         {
