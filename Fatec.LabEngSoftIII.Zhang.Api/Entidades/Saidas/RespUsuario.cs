@@ -15,6 +15,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas
         public int Nivel { get; set; }
         public List<RespSkin> Skins { get; set; }
         public string Token { get; set; }
+        public int Cash { get; set; }
 
         public static RespUsuario MontarRespUsuario(Usuario usuarioBD)
         {
@@ -26,7 +27,8 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas
                 Id = usuarioBD.Id,
                 Login = usuarioBD.Login,
                 Email = usuarioBD.Email,
-                Experiencia = usuarioBD.Experiencia
+                Experiencia = usuarioBD.Experiencia,
+                Cash = usuarioBD.Cash
             };
 
             List<Experiencia> experiencia = JogoBD.PegarExperiencias();
