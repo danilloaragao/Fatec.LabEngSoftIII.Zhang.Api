@@ -33,7 +33,6 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
         public string CadastrarUsuario(Usuario usuario)
         {
             this.Context.Usuarios.Add(usuario);
-            this.Context.SaveChanges();
 
             int idUsuario = this.Context.Usuarios.FirstOrDefault(u => u.Login.Equals(usuario.Login)).Id;
 
@@ -43,6 +42,8 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
                 IdSkin = 16,
                 Ativo = true
             });
+
+            this.Context.SaveChanges();
 
             return "Cadastro efetuado com sucesso";
         }
