@@ -33,7 +33,9 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
                     Id = usuarioSkin.IdSkin,
                     Ativo = usuarioSkin.Ativo,
                     Nivel = infoSkin.Nivel,
-                    Descricao = infoSkin.Descricao
+                    Descricao = infoSkin.Descricao,
+                    Sprite = infoSkin.Sprite,
+                    JumpScare = infoSkin.JumpScare
                 };
                 retorno.Add(respSkin);
             }
