@@ -34,6 +34,8 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
         {
             this.Context.Usuarios.Add(usuario);
 
+            this.Context.SaveChanges();
+
             int idUsuario = this.Context.Usuarios.FirstOrDefault(u => u.Login.Equals(usuario.Login)).Id;
 
             this.Context.UsuarioSkins.Add(new UsuarioSkin() 
