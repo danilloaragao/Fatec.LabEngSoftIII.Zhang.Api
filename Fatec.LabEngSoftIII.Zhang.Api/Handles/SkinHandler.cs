@@ -55,7 +55,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 
             List<Skin> skins = PegarSkinsPorDescricao(skin.Descricao);
 
-            if (skins.Any(t => t.Descricao.ToUpper().Equals(skin.Descricao.ToUpper())))
+            if (skins.Any(t => t.Descricao.ToUpper().Equals(skin.Descricao.ToUpper()) && t.Id != skin.Id))
                 return "Skin já existe no banco de dados";
 
             if (PegarSkin(skin.Id) == null)
