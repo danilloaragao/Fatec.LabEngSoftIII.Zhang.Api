@@ -107,14 +107,14 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [Route("Skins")]
-        public ActionResult AlteracaoSkins([FromBody] List<ReqSkin> skins, [FromHeader] string token)
+        public ActionResult AlteracaoSkins([FromQuery] int idSkin, [FromHeader] string token)
         {
             try
             {
                 if (!Token.Validar(token))
                     return StatusCode(401, $"Usuário não autorizado para essa operação");
 
-                return Ok(JogoHandler.AlteracaoSkins(skins, Token.PegarId(token)));
+                return Ok(JogoHandler.AlteracaoSkin(idSkin, Token.PegarId(token)));
             }
             catch (Exception ex)
             {

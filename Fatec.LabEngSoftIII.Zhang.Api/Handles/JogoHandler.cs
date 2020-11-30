@@ -14,9 +14,9 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
         private readonly JogoBD JogoBD = new JogoBD();
         private readonly UsuarioBD UsuarioBD = new UsuarioBD();
 
-        public string AlteracaoSkins(List<ReqSkin> skins, int idUsuario)
+        public string AlteracaoSkin(int idSkin, int idUsuario)
         {
-            JogoBD.AlteracaoSkins(skins, idUsuario);
+            JogoBD.AlteracaoSkins(idSkin, idUsuario);
             return "Alterações realizadas com sucesso";
         }
 

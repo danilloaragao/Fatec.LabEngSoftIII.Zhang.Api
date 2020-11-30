@@ -52,17 +52,18 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             return Context.Skins.Where(s => s.Id == id && s.IsVip).FirstOrDefault();
         }
 
-        public void AlteracaoSkins(List<ReqSkin> skins, int idUsuario)
+        public void AlteracaoSkin(int idSkin, int idUsuario)
         {
-            foreach (ReqSkin skin in skins)
-            {
-                UsuarioSkin usuarioSkin = this.Context.UsuarioSkins.FirstOrDefault(u => u.IdUsuario == idUsuario && u.IdSkin == skin.Id);
 
-                if (usuarioSkin == null)
-                    continue;
+            UsuarioSkin skinDesativar = this.Context.UsuarioSkins.FirstOrDefault(u => u.IdUsuario == idUsuario && u.Ativo);
+            UsuarioSkin skinAtivar = this.Context.UsuarioSkins.FirstOrDefault(u => u.IdUsuario == idUsuario && u.IdSkin == idSkin);
 
-                usuarioSkin.Ativo = skin.Ativo;
-            }
+            if (skinDesativar == null || skinAtivar == null)
+                    return;
+
+            skinDesativar.Ativo = false;
+            skinAtivar.Ativo = true;
+
             this.Context.SaveChanges();
         }
 
