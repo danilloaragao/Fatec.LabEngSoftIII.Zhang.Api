@@ -112,9 +112,11 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             return rankings;
         }
 
-        public void CompraCash(int qtdCash, int idUsuario)
+        public int CompraCash(int qtdCash, int idUsuario)
         {
             UsuarioBD.CompraCash(qtdCash, idUsuario);
+
+            return UsuarioBD.PegarUsuarioPeloId(idUsuario).Cash;
         }
 
         public List<RespSkinVip> SkinsVip(int idUsuario)
@@ -127,6 +129,10 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
             {
                 RespSkinVip respSkinVip = new RespSkinVip
                 {
+                    Id = skin.Id,
+                    JumpScare = skin.JumpScare,
+                    Sprite = skin.Sprite,
+                    Nivel = skin.Nivel,
                     Descricao = skin.Descricao,
                     Comprada = JogoBD.ExisteUsuarioSkin(skin.Id, idUsuario)
                 };

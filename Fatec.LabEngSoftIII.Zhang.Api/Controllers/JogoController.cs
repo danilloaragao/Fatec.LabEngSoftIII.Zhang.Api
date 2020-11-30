@@ -143,7 +143,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [Route("CompraCash")]
@@ -154,9 +154,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
                 if (!Token.Validar(token))
                     return StatusCode(401, $"Usuário não autorizado para essa operação");
 
-                JogoHandler.CompraCash(qtdCash, Token.PegarId(token));
-
-                return Ok("Compra efetuada com sucesso");
+                return Ok(JogoHandler.CompraCash(qtdCash, Token.PegarId(token)));
             }
             catch (Exception ex)
             {
