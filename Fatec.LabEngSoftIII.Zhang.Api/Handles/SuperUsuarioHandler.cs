@@ -40,7 +40,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
                     inconsistencias.Add("Login deve ter no mínimo 4 caracteres");
                 else
                 {
-                    if (this.UsuarioBD.PegarUsuarioPeloLogin(usuario.Login) != null)
+                    if (this.UsuarioBD.PegarUsuarioPeloLoginEmail(usuario.Login) != null)
                         inconsistencias.Add("Este login já está em uso");
                 }
             }

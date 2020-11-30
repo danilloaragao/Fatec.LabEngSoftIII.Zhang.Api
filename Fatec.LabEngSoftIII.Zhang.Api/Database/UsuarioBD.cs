@@ -8,9 +8,9 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
     {
         private readonly Context Context = new Context();
 
-        public Usuario PegarUsuarioPeloLogin(string login)
+        public Usuario PegarUsuarioPeloLoginEmail(string loginEmail)
         {
-            return Context.Usuarios.FirstOrDefault(u => u.Login.Equals(login));
+            return Context.Usuarios.FirstOrDefault(u => u.Login.Equals(loginEmail) || u.Email.Equals(loginEmail));
         }
 
         public Usuario PegarAdmPeloLogin(string login)

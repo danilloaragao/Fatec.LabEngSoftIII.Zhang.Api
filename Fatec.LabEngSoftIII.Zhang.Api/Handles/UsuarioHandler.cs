@@ -14,7 +14,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
         private readonly Email Email = new Email();
         public RespUsuario Login(ReqCredenciais credenciais)
         {
-            Usuario usuarioBD = UsuarioBD.PegarUsuarioPeloLogin(credenciais.Login);
+            Usuario usuarioBD = UsuarioBD.PegarUsuarioPeloLoginEmail(credenciais.Login);
 
             if (usuarioBD == null || !credenciais.Senha.Equals(Criptografia.Decriptografar(usuarioBD.Senha)))
                 return null;
@@ -36,7 +36,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
                 if (usuario.Login.Length < 4)
                     inconsistencias.Add("Login deve ter no mínimo 4 caracteres");
                 else{
-                    if (this.UsuarioBD.PegarUsuarioPeloLogin(usuario.Login) != null)
+                    if (this.UsuarioBD.PegarUsuarioPeloLoginEmail(usuario.Login) != null)
                         inconsistencias.Add("Este login já está em uso");
                 }                
             }
