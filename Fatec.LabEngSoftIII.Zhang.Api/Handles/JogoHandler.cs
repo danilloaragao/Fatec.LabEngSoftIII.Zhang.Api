@@ -16,7 +16,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 
         public string AlteracaoSkin(int idSkin, int idUsuario)
         {
-            JogoBD.AlteracaoSkins(idSkin, idUsuario);
+            JogoBD.AlteracaoSkin(idSkin, idUsuario);
             return "Alterações realizadas com sucesso";
         }
 
