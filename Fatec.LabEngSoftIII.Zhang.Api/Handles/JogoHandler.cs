@@ -14,10 +14,10 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
         private readonly JogoBD JogoBD = new JogoBD();
         private readonly UsuarioBD UsuarioBD = new UsuarioBD();
 
-        public string AlteracaoSkin(int idSkin, int idUsuario)
+        public RespUsuario AlteracaoSkin(int idSkin, int idUsuario)
         {
             JogoBD.AlteracaoSkin(idSkin, idUsuario);
-            return "Alterações realizadas com sucesso";
+            return RespUsuario.MontarRespUsuario(UsuarioBD.PegarUsuarioPeloId(idUsuario));
         }
 
         public RespUsuario AcertoPalavra(ReqAcerto acerto, int idUsuario)
