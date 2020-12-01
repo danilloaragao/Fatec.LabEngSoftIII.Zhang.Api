@@ -78,7 +78,8 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
 
         public void AtualizarSkins(RespUsuario usuario)
         {
-            List<Skin> skins = Context.Skins.Where(s => s.Nivel == usuario.Nivel && !s.IsVip).ToList();
+            List<Skin> skins = Context.Skins.Where(s => s.Nivel <= usuario.Nivel && !s.IsVip 
+                                                        && !Context.UsuarioSkins.Any(us => us.IdSkin == s.Id && us.IdUsuario == usuario.Id)).ToList();
 
             foreach (Skin skin in skins)
             {
