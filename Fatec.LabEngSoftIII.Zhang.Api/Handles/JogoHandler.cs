@@ -165,5 +165,10 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Handles
 
             return RespPalavraJogo.MontarResposta(palavraSorteada, quantidadeLetras);
         }
+
+        public List<RespSkin> ObterSkinsUsuario(int idUsuario)
+        {
+            return JogoBD.PegarSkinsUsuario(idUsuario);
+        }
     }
 }

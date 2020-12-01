@@ -123,6 +123,26 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<RespSkin>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [Route("Skins")]
+        public ActionResult SkinsUsuario([FromHeader] string token)
+        {
+            try
+            {
+                if (!Token.Validar(token))
+                    return StatusCode(401, $"Usuário não autorizado para essa operação");
+
+                return Ok(JogoHandler.ObterSkinsUsuario(Token.PegarId(token)));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ocorreu uma falha na sua solicitação: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<RespRanking>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
