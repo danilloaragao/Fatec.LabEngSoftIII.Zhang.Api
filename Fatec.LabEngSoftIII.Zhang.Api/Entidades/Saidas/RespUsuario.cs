@@ -47,7 +47,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Entidades.Saidas
             else
                 usuario.ExperienciaProximoNivel = niveisAcima.Min(e => e.Valor) - usuario.Experiencia;
 
-            usuario.Skins = JogoBD.PegarSkinsUsuario(usuario.Id) ?? new List<RespSkin>();
+            usuario.Skins = JogoBD.PegarSkinAtiva(usuario.Id);
             usuario.Token = Token.Gerar(usuario.Login, usuario.Id, usuarioBD.IsAdmin);
 
             return usuario;

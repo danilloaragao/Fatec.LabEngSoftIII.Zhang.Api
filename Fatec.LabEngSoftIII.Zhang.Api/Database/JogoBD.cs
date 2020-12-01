@@ -59,7 +59,7 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             UsuarioSkin skinAtivar = this.Context.UsuarioSkins.FirstOrDefault(u => u.IdUsuario == idUsuario && u.IdSkin == idSkin);
 
             if (skinDesativar == null || skinAtivar == null)
-                    return;
+                return;
 
             skinDesativar.Ativo = false;
             skinAtivar.Ativo = true;
@@ -127,13 +127,32 @@ namespace Fatec.LabEngSoftIII.Zhang.Api.Database
             return Context.Skins.Where(s => s.IsVip).ToList();
         }
 
+        public List<RespSkin> PegarSkinAtiva(int idUsuario)
+        {
+            int idSkinAtiva = Context.UsuarioSkins.FirstOrDefault(us => us.IdUsuario == idUsuario && us.Ativo).IdSkin;
+            Skin skin = Context.Skins.FirstOrDefault(s => s.Id == idSkinAtiva);
+
+            return new List<RespSkin>()
+            {
+                new RespSkin()
+                {
+                    Ativo = true,
+                    Descricao = skin.Descricao,
+                    Id = skin.Id,
+                    JumpScare = skin.JumpScare,
+                    Nivel = skin.Nivel,
+                    Sprite = skin.Sprite
+                }
+             };
+        }
+
         public List<PalavraJogo> ObterPalavras(string tema)
         {
             if (string.IsNullOrWhiteSpace(tema))
                 return this.Context.Palavras.ToList();
             else
             {
-                return this.Context.Palavras.Where(p => 
+                return this.Context.Palavras.Where(p =>
                                             p.IdTema == this.Context.Temas.FirstOrDefault(t => t.Descricao.ToUpper().Equals(tema.ToUpper())).Id
                                             ).ToList();
             }
